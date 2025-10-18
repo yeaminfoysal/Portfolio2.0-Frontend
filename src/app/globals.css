@@ -112,10 +112,42 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+.bg-main {
+  background-color: #050709
+}
+
+.mx-auto.items-right.sniped-box {
+  margin: 0 !important;
+}
+
+.banner-shadow {
+  box-shadow: 0px 0px 15px 1px #864ff5bb;
+}
+
+/* Light mode (default) */
+pre[class*="language-"],
+:not(pre)>code[class*="language-"] {
+  background-color: #f9f9f9 !important;
+  /* light code block */
+}
+
+/* Dark mode */
+.dark pre[class*="language-"],
+.dark :not(pre)>code[class*="language-"] {
+  background-color: #050709 !important;
+  /* dark code block */
+}
+
+pre[class*="language-"] {
+  padding: 1em;
+  margin: .05em 0 !important;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
