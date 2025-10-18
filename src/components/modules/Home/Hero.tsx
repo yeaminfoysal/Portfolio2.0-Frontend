@@ -50,21 +50,21 @@ export default function Hero() {
     return (
         <section className="py-20 relative">
 
-            <div className="flex flex-col xl:flex-row items-center justify-evenly mx-auto w-[95%] 2xl:max-w-[1492px] bg-background px-6 md:px-12 py-10 md:py-20 rounded-2xl shadow-2xl gap-10 transition-all duration-300 ">
+            <div className="flex flex-col xl:flex-row items-center justify-evenly mx-auto w-[95%] 2xl:max-w-[1492px]  px-6 md:px-12 py-10 md:py-20  gap-10 transition-all duration-300 ">
 
-                <div className="absolute w-[450px] h-[450px] rounded-full bg-gradient-to-tr from-[#8851f7] via-[#5b2df5] to-transparent bottom-1 left-60 opacity-30  blur-[120px] overflow-hidden"></div>
+                {/* <div className="absolute w-[450px] h-[450px] rounded-full bg-gradient-to-tr from-[#8851f7] via-[#5b2df5] to-transparent bottom-1 left-60 opacity-30  blur-[120px] overflow-hidden"></div> */}
 
                 {/* Left: Text */}
                 <div className="text-center xl:text-left space-y-6  flex-1">
 
                     {/* Greeting */}
-                    <h3 className="text-3xl font-semibold text-[var(--foreground)]">
+                    <h3 className="text-4xl font-semibold text-[var(--foreground)]">
                         Hello, I am Yeamin Foysal
                     </h3>
 
                     {/* Title with Typewriter */}
-                    <h1 className="text-5xl font-bold text-[var(--foreground)]">
-                        <span className="inline-block bg-gradient-to-r from-[#7548fd] via-[#ac89ff] to-[#ffffff] bg-clip-text text-transparent">
+                    <h1 className="text-[55px] font-bold text-[var(--foreground)]">
+                        <span className="inline-block gradient-txt-bg bg-clip-text text-transparent">
                             <Typewriter
                                 words={["Full Stack Developer", "MERN Stack Engineer", "Creative Coder"]}
                                 loop={0}
@@ -130,13 +130,15 @@ export default function Hero() {
 
 
                 {/* Right: Code Block */}
-                <div className="bg-gradient-to-br from-[#8851f7] to-[#5b2df5] p-[1px] rounded-lg w-full max-w-xl banner-shadow ">
+                <div className="bg-gradient p-[1px] rounded-lg w-full max-w-xl banner-shadow ">
+                    
                     <div className="flex items-center space-x-2 px-3 py-5 bg-white dark:bg-[#050709] rounded-t-lg">
                         <span className="w-3 h-3 bg-red-500 rounded-full"></span>
                         <span className="w-3 h-3 bg-yellow-500 rounded-full"></span>
                         <span className="w-3 h-3 bg-green-500 rounded-full"></span>
                     </div>
-                    <pre className="bg-[#050709] text-sm md:text-base overflow-x-auto p-4 rounded-b-lg">
+                    <pre className="bg-[#050709] text-sm md:text-base overflow-x-auto p-4 rounded-b-lg relative overflow-hidden">
+                        <div className="absolute w-[450px] h-[200px] rounded-full bg-gradient to-transparent opacity-20 left-30 top-36 blur-[80px] overflow-hidden"></div>
                         <code className="language-javascript">{code}</code>
                     </pre>
                 </div>

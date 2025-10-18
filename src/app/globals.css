@@ -121,7 +121,9 @@
 }
 
 .banner-shadow {
-  box-shadow: 0px 0px 15px 1px #864ff5bb;
+  box-shadow: 0px 0px 15px 1px #7e2ebf;
+  /* box-shadow: 0px 0px 15px 1px #864ff5bb; */
+  /* box-shadow: 0px 0px 15px 1px #ccf31d5a; */
 }
 
 /* Light mode (default) */
@@ -147,6 +149,7 @@ pre[class*="language-"] {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
@@ -156,7 +159,44 @@ pre[class*="language-"] {
   animation: rotateGlow 3s linear infinite;
 }
 
-/*  */
+/*  Color   */
+
+.bg-gradient {
+  background-image: linear-gradient(to right, #8851f7, #5b2df5);
+  background-image: linear-gradient(to right, #a722ca, #a722ca);
+    /* background: linear-gradient(to right, #9ebc17, #5e6f11); */
+}
+.gradient-txt-bg {
+  background-image: linear-gradient(to right, #7548fd, #ffffff);
+  background-image: linear-gradient(to right, #a722ca, #bf00f9);
+    /* background-image: linear-gradient(to right, #caf31d, #ffffff); */
+}
+.main-bg{
+  background: #caf31d;
+  background: #a722ca;
+}
+.main-txt{
+  color: #caf31d;
+  color: #623ac0;
+  color: #a722ca;
+}
+
+.btn-gradient {
+  /* Linear gradient from left to right */
+  background: linear-gradient(
+    to right, 
+    #3c1c9c, /* from */
+    #623ac0, /* via */
+    #b091f8  /* to */
+  );
+  background: linear-gradient(
+    to right, 
+    #5d228d, /* from */
+    #8d2ea4, /* via */
+    #bf00f9  
+  );
+}
+
 
 @layer base {
   * {

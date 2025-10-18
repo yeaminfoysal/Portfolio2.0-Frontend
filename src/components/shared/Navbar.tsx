@@ -18,10 +18,10 @@ const Navbar = () => {
     ];
 
     return (
-        <nav className="fixed top-0 left-0 w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-md z-50">
-            <div className="max-w-6xl mx-auto px-6 py-3 flex justify-between items-center">
+        <nav className="fixed top-12 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1236px] rounded-full bg-[#a722ca]/10 dark:bg-[#a722ca]/10 backdrop-blur-lg border border-[#a722ca]/20 z-50">
+            <div className="max-w-6xl mx-auto px-6 py-1 flex justify-between items-center">
                 {/* Logo / Name */}
-                <Link href="/" className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">
+                <Link href="/" className="text-3xl font-bold main-txt ">
                     Yeamin<span className="text-gray-800 dark:text-gray-100">Foysal</span>
                 </Link>
 
@@ -32,8 +32,8 @@ const Navbar = () => {
                             <Link
                                 href={link.path}
                                 className={`text-lg font-medium transition-colors ${pathname === link.path
-                                        ? "text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 pb-1"
-                                        : "text-gray-700 dark:text-gray-300 hover:text-indigo-500 dark:hover:text-indigo-400"
+                                    ? " main-txt border-b-2 border-[#a722ca] pb-1"
+                                    : "text-gray-700 dark:text-gray-300 hover:text-indigo-500 dark:hover:text-indigo-400"
                                     }`}
                             >
                                 {link.name}
@@ -63,8 +63,8 @@ const Navbar = () => {
                                     href={link.path}
                                     onClick={() => setIsOpen(false)}
                                     className={`text-lg font-medium ${pathname === link.path
-                                            ? "text-indigo-600 dark:text-indigo-400"
-                                            : "text-gray-700 dark:text-gray-300 hover:text-indigo-500 dark:hover:text-indigo-400"
+                                        ? "text-indigo-600 dark:text-indigo-400"
+                                        : "text-gray-700 dark:text-gray-300 hover:text-indigo-500 dark:hover:text-indigo-400"
                                         }`}
                                 >
                                     {link.name}

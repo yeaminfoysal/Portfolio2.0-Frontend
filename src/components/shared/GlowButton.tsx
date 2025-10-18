@@ -26,7 +26,7 @@ export default function GlowButton({ href, children, className }: GlowButtonProp
             <span className="absolute inset-0 w-full h-full translate-x-[100%] bg-gradient-to-l from-transparent via-white/30 to-transparent group-hover:translate-x-[-100%] transition-transform duration-900 ease-out" />
 
             <button
-                className="relative py-2.5 px-6 rounded-md bg-gradient-to-r from-[#3c1c9c] via-[#623ac0] to-[#b091f8] text-white font-medium overflow-hidden"
+                className="relative py-2.5 px-6 rounded-md btn-gradient text-white font-medium overflow-hidden"
                 type="button"
             >
                 <span className="relative z-10">{children}</span>
