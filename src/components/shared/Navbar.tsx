@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import { ModeToggle } from "./mode-toggle";
+import GlowButton from "./GlowButton";
 
 const Navbar = () => {
     const pathname = usePathname();
@@ -25,7 +26,7 @@ const Navbar = () => {
                 </Link>
 
                 {/* Desktop Links */}
-                <ul className="hidden md:flex space-x-8">
+                <ul className="hidden md:flex space-x-8 items-center">
                     {links.map((link) => (
                         <li key={link.name}>
                             <Link
@@ -40,6 +41,7 @@ const Navbar = () => {
                         </li>
                     ))}
                     <ModeToggle />
+                    <GlowButton>Resume</GlowButton>
                 </ul>
 
                 {/* Mobile Menu Button */}

@@ -1,14 +1,18 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
+import { Typewriter } from "react-simple-typewriter";
+
 
 import { useEffect } from "react";
 import Prism from "prismjs";
 import "prismjs/components/prism-javascript";
 import "prismjs/themes/prism-tomorrow.css"; // Dark theme
 import { useTheme } from "next-themes";
-import { FaFacebookF, FaGithub, FaLinkedinIn } from "react-icons/fa";
+import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
 import { FiGithub } from "react-icons/fi";
 import Link from "next/link";
+import { MdArrowOutward } from "react-icons/md";
+import GlowButton from "@/components/shared/GlowButton";
 
 export default function Hero() {
     const { theme } = useTheme();
@@ -44,24 +48,38 @@ export default function Hero() {
     }, [theme]);
 
     return (
-        <section className="py-20">
+        <section className="py-20 relative">
 
-            <div className="flex flex-col xl:flex-row items-center justify-evenly mx-auto w-[95%] 2xl:max-w-[1492px] bg-background px-6 md:px-12 py-10 md:py-20 rounded-2xl shadow-2xl gap-10 transition-all duration-300">
+            <div className="flex flex-col xl:flex-row items-center justify-evenly mx-auto w-[95%] 2xl:max-w-[1492px] bg-background px-6 md:px-12 py-10 md:py-20 rounded-2xl shadow-2xl gap-10 transition-all duration-300 ">
+
+                <div className="absolute w-[450px] h-[450px] rounded-full bg-gradient-to-tr from-[#8851f7] via-[#5b2df5] to-transparent bottom-1 left-60 opacity-30  blur-[120px] overflow-hidden"></div>
+
                 {/* Left: Text */}
+                <div className="text-center xl:text-left space-y-6  flex-1">
 
-                <div className="text-center xl:text-left space-y-6">
                     {/* Greeting */}
                     <h3 className="text-3xl font-semibold text-[var(--foreground)]">
                         Hello, I am Yeamin Foysal
                     </h3>
 
-                    {/* Title */}
+                    {/* Title with Typewriter */}
                     <h1 className="text-5xl font-bold text-[var(--foreground)]">
-                        <span className="text-[#8851f7]">Full Stack Developer</span>
+                        <span className="inline-block bg-gradient-to-r from-[#7548fd] via-[#ac89ff] to-[#ffffff] bg-clip-text text-transparent">
+                            <Typewriter
+                                words={["Full Stack Developer", "MERN Stack Engineer", "Creative Coder"]}
+                                loop={0}
+                                cursor
+                                cursorStyle={<span className="text-[#fff]">|</span>}
+                                cursorBlinking={false}
+                                typeSpeed={25}
+                                deleteSpeed={25}
+                                delaySpeed={1500}
+                            />
+                        </span>
                     </h1>
 
                     {/* Description */}
-                    <p className="text-lg text-[var(--muted-foreground)] max-w-md mx-auto xl:mx-0">
+                    <p className="text-lg mx-auto xl:mx-0">
                         Hi, I’m Yeamin Foysal from Tangail, now living in Dhaka, Bangladesh. I’m
                         an undergraduate student in Computer Science and Engineering with a deep
                         passion for programming.
@@ -96,26 +114,28 @@ export default function Hero() {
                             <FiGithub size={20} />
                         </Link>
                     </div>
-                    <div className="flex gap-4">
-                        <Link href="/projects">
-                            <button className="px-3 py-2 rounded-md bg-[#8851f7]">Projects</button>
-                        </Link>
-                        <Link href="/projects">
-                            <button className="px-3 py-2 rounded-md bg-[#8851f7]">Resume</button>
-                        </Link>
+                    <div className="flex gap-4 items-center">
+                        <GlowButton href="/projects">
+                            Projects
+                        </GlowButton>
+
+                        <GlowButton>
+                            <span className="flex items-center gap-2">
+                                Resume
+                                <MdArrowOutward size={25} />
+                            </span>
+                        </GlowButton>
                     </div>
                 </div>
 
 
                 {/* Right: Code Block */}
-                <div className="bg-gradient-to-br from-[#8851f7] to-[#5b2df5] p-[1px] rounded-lg w-full max-w-xl banner-shadow">
-                    {/* Window Header */}
+                <div className="bg-gradient-to-br from-[#8851f7] to-[#5b2df5] p-[1px] rounded-lg w-full max-w-xl banner-shadow ">
                     <div className="flex items-center space-x-2 px-3 py-5 bg-white dark:bg-[#050709] rounded-t-lg">
                         <span className="w-3 h-3 bg-red-500 rounded-full"></span>
                         <span className="w-3 h-3 bg-yellow-500 rounded-full"></span>
                         <span className="w-3 h-3 bg-green-500 rounded-full"></span>
                     </div>
-                    {/* Code Block */}
                     <pre className="bg-[#050709] text-sm md:text-base overflow-x-auto p-4 rounded-b-lg">
                         <code className="language-javascript">{code}</code>
                     </pre>

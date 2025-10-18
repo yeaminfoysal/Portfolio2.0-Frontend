@@ -143,6 +143,21 @@ pre[class*="language-"] {
   margin: .05em 0 !important;
 }
 
+@keyframes rotateGlow {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-rotateGlow {
+  animation: rotateGlow 3s linear infinite;
+}
+
+/*  */
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
