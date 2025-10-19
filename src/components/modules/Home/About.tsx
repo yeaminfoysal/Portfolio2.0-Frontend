@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import img from '../../../../public/png3.png'
 import Image from 'next/image';
 import GlowButton from '@/components/shared/GlowButton';
@@ -6,10 +5,12 @@ import GlowButton from '@/components/shared/GlowButton';
 
 const About = () => {
     return (
-        <div id='about' className='section w-[95%] lg:w-[80%] 2xl:max-w-[1492px] mx-auto flex flex-col lg:flex-row  justify-between items-center py-24 gap-10 2xl:gap-20'>
+        <div className='section w-[95%] lg:w-[80%] 2xl:max-w-[1492px] mx-auto flex flex-col lg:flex-row  justify-between items-center py-24 gap-10 2xl:gap-20 relative'>
+
+            <div className="absolute w-[550px] h-[300px] rounded-full bg-gradient to-transparent opacity-20 left-0 -top-60 blur-[120px] overflow-hidden"></div>
+
             <div className='p-8 shadow-2xl rounded-2xl '>
-                <div className='bg-secondery mx-auto rounded-2xl relative'>
-                     <div className="absolute w-[550px] h-[300px] rounded-full bg-gradient to-transparent opacity-20 left-0 -top-66 blur-[120px] overflow-hidden"></div>
+                <div className='bg-secondery mx-auto rounded-2xl'>
                     <Image className=' mx-auto ' src={img} alt="" />
                 </div>
             </div>
