@@ -181,6 +181,10 @@ pre[class*="language-"] {
   color: #a722ca;
 }
 
+.main-border{
+  border: 1 solid #7e2ebf68;
+}
+
 .btn-gradient {
   /* Linear gradient from left to right */
   background: linear-gradient(
