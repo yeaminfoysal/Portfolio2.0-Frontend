@@ -5,7 +5,7 @@ import GlowButton from '@/components/shared/GlowButton';
 
 const About = () => {
     return (
-        <div className='section w-[95%] lg:w-[80%] 2xl:max-w-[1492px] mx-auto flex flex-col lg:flex-row  justify-between items-center py-24 gap-10 2xl:gap-20 relative'>
+        <div className='section max-w-7xl mx-auto flex flex-col lg:flex-row  justify-between items-center py-24 gap-10 2xl:gap-20 relative'>
 
             <div className="absolute w-[550px] h-[300px] rounded-full bg-gradient to-transparent opacity-20 left-0 -top-60 blur-[120px] overflow-hidden"></div>
 

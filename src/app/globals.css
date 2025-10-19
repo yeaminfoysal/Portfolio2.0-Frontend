@@ -126,6 +126,44 @@
   /* box-shadow: 0px 0px 15px 1px #ccf31d5a; */
 }
 
+.animated-border {
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.animated-border::before,
+.animated-border::after {
+  content: "";
+  position: absolute;
+  height: 150%;
+  width: 150%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+.animated-border::before {
+  background: conic-gradient(#a722ca 20deg, transparent 120deg);
+  animation: rotate 10s infinite linear;
+  filter: blur(10px);
+}
+
+.animated-border::after {
+  background: var(--background);
+  height: 99%;
+  width: 99%;
+  /* box-shadow: 5px 5px 15px #0008 inset; */
+  border-radius: 14px;
+}
+
+@keyframes rotate {
+  100% {
+    transform: translate(-50%, -50%) rotate(-360deg)
+  }
+}
+
 /* Light mode (default) */
 pre[class*="language-"],
 :not(pre)>code[class*="language-"] {
@@ -164,43 +202,49 @@ pre[class*="language-"] {
 .bg-gradient {
   background-image: linear-gradient(to right, #8851f7, #5b2df5);
   background-image: linear-gradient(to right, #a722ca, #a722ca);
-    /* background: linear-gradient(to right, #9ebc17, #5e6f11); */
+  /* background: linear-gradient(to right, #9ebc17, #5e6f11); */
 }
+
 .gradient-txt-bg {
   background-image: linear-gradient(to right, #7548fd, #ffffff);
   background-image: linear-gradient(to right, #a722ca, #bf00f9);
-    /* background-image: linear-gradient(to right, #caf31d, #ffffff); */
+  /* background-image: linear-gradient(to right, #caf31d, #ffffff); */
 }
-.main-bg{
+
+.main-bg {
   background: #caf31d;
   background: #a722ca;
 }
-.main-txt{
+
+.main-txt {
   color: #caf31d;
   color: #623ac0;
   color: #a722ca;
 }
 
-.main-border{
+.main-border {
   border: 1 solid #7e2ebf68;
 }
 
 .btn-gradient {
   /* Linear gradient from left to right */
-  background: linear-gradient(
-    to right, 
-    #3c1c9c, /* from */
-    #623ac0, /* via */
-    #b091f8  /* to */
-  );
-  background: linear-gradient(
-    to right, 
-    #5d228d, /* from */
-    #8d2ea4, /* via */
-    #bf00f9  
-  );
+  background: linear-gradient(to right,
+      #3c1c9c,
+      /* from */
+      #623ac0,
+      /* via */
+      #b091f8
+      /* to */
+    );
+  background: linear-gradient(to right,
+      #5d228d,
+      /* from */
+      #8d2ea4,
+      /* via */
+      #bf00f9);
 }
 
+/* #9333ea, #06b6d4, #9333ea */
 
 @layer base {
   * {

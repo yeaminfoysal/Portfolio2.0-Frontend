@@ -66,7 +66,7 @@ function ScrollingRow({
     });
 
     return (
-        <div className="overflow-hidden whitespace-nowrap my-5 relative py-4">
+        <div className="overflow-hidden whitespace-nowrap my-2 relative py-4">
             <div ref={containerRef} className="flex gap-6 items-center">
                 {[...items, ...items].map((item, i) => (
                     <motion.div
@@ -75,7 +75,7 @@ function ScrollingRow({
                         onMouseEnter={() => (speed = 0)}
                         onMouseLeave={() => (speed = 40)}
                         transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                        className="min-w-[200px] min-h-[150px] flex items-center justify-center gap-3 px-8 py-4 border main-border bg-background rounded-2xl text-lg font-medium shadow-md flex-col hover:banner-shadow"
+                        className="min-w-[150px] min-h-[150px] flex items-center justify-center gap-3 px-8 py-4 border main-border bg-background rounded-2xl text-lg font-medium shadow-md flex-col hover:banner-shadow"
                     >
                         <Image
                             src={item.icon}
@@ -98,14 +98,14 @@ function ScrollingRow({
 
 export default function MovingSkills() {
     return (
-        <section className="py-20 text-center relative">
-            <div className="max-w-7xl mx-auto px-4">
+        <section className=" text-center relative my-16">
+            <div className=" mx-auto px-4">
 
                 {/* 🔹 1st row → left to right */}
-                <ScrollingRow items={skillsRow1} reverse={false} speed={50} />
+                <ScrollingRow items={skillsRow1} reverse={false} speed={70} />
 
                 {/* 🔹 2nd row → right to left */}
-                <ScrollingRow items={skillsRow2} reverse={true} speed={50} />
+                <ScrollingRow items={skillsRow2} reverse={true} speed={70} />
             </div>
         </section>
     );
