@@ -11,7 +11,7 @@ const EducationCertification = () => {
             <div className="absolute w-[750px] h-[800px] rounded-full bg-gradient to-transparent opacity-20 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 blur-[160px] overflow-hidden"></div>
 
 
-            <div className="max-w-7xl mx-auto px-6 relative z-10">
+            <div className="max-w-7xl mx-auto relative z-10">
                 <motion.h2
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -21,7 +21,7 @@ const EducationCertification = () => {
                     Education & Certifications 
                 </motion.h2>
 
-                <div className="grid grid-cols-7 gap-5">
+                <div className="grid grid-cols-7 gap-8">
                     <div className="col-span-4 relative flex flex-col gap-12 pl-10">
                         {data.map((edu, index) => (
                             <EducationCard
@@ -52,7 +52,7 @@ const EducationCertification = () => {
                                 courses={edu.courses}
                                 isfirst={index == 0}
                                 length={data.length}
-                                certificate={edu.certificateLink}
+                                certificateURL={edu.certificateURL}
                             />
                         ))}
                     </div>

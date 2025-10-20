@@ -3,6 +3,7 @@
         "id": 1,
         "degree": "Complete Web Development",
         "institute": "Programming Hero",
+        "location": "Dhaka, Bangladesh",
         "duration": "2022 - 2026",
         "status": "22-23 (ongoing)",
         "achievements": [
@@ -18,12 +19,13 @@
             "MongoDB",
             "html & css"
         ],
-        "certificateLink": "https://drive.google.com/file/d/15f9HZy6bz_QMnR5GtzFfOdc-gv77IQ7P/view?usp=sharing"
+        "certificateURL": "https://drive.google.com/file/d/15f9HZy6bz_QMnR5GtzFfOdc-gv77IQ7P/view?usp=sharing"
     },
     {
         "id": 2,
         "degree": "Complete Web Development",
         "institute": "Programming Hero",
+                "location": "Dhaka, Bangladesh",
         "duration": "2022 - 2026",
         "status": "22-23 (ongoing)",
         "achievements": [
@@ -39,6 +41,6 @@
             "MongoDB",
             "html & css"
         ],
-        "certificateLink": "https://drive.google.com/file/d/15f9HZy6bz_QMnR5GtzFfOdc-gv77IQ7P/view?usp=sharing"
+        "certificateURL": "https://drive.google.com/file/d/15f9HZy6bz_QMnR5GtzFfOdc-gv77IQ7P/view?usp=sharing"
     }
 ]

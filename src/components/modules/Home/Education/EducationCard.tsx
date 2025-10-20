@@ -12,7 +12,7 @@ type EducationProps = {
     status: string;
     achievements: string[];
     courses: string[];
-    certificate?: string,
+    certificateURL?: string,
     instituteURL?: string,
     isfirst: boolean,
     length: number
@@ -28,7 +28,7 @@ const EducationCard: React.FC<EducationProps> = ({
     status,
     achievements,
     courses,
-    certificate,
+    certificateURL,
     instituteURL,
     isfirst,
     length
@@ -76,7 +76,7 @@ const EducationCard: React.FC<EducationProps> = ({
 
             {/* Animated glow vertical line (only once for first card) */}
             {isfirst && (
-                <div className="absolute left-[-25px] top-16 bottom-0 w-[3px]">
+                <div className="absolute left-[-20px] top-16 bottom-0 w-[3px]">
                     {/* Base static line */}
                     <div
                         className={`absolute inset-0 bg-gradient  ${length === 1
@@ -109,8 +109,10 @@ const EducationCard: React.FC<EducationProps> = ({
             </div>
 
             {/* Institute Info */}
-            <div className="flex items-center gap-3 mb-4 ">
-                <FaSchool className="text-purple-400 text-lg" />
+            <div className="flex items-center gap-3 mb-4 bg-[#a822ca1e] p-3 rounded-md">
+                <span className="bg-[#a822ca29] p-3 rounded-md">
+                    <FaSchool className="main-txt text-xl" />
+                </span>
                 <div>
                     <p className="font-medium">{institute}</p>
                     <p className="text-sm ">{location}</p>
@@ -120,7 +122,7 @@ const EducationCard: React.FC<EducationProps> = ({
             {/* Status */}
             <div className="flex items-center gap-2 mb-4 font-medium">
                 <FaStar className="text-pink-500" />
-                <span className="bg-purple-900/40 border main-border px-3 py-1  rounded-lg text-sm">
+                <span className="bg-[#a822ca1e] border main-border px-3 py-3  rounded-lg text-sm">
                     {status}
                 </span>
             </div>
@@ -132,7 +134,7 @@ const EducationCard: React.FC<EducationProps> = ({
                 </h4>
                 <ul className="space-y-2 text-foreground/80 text-sm list-disc list-inside">
                     {achievements.map((ach, i) => (
-                        <li key={i}>{ach}</li>
+                        <li className="bg-[#a822ca21] p-2 rounded-md" key={i}>{ach}</li>
                     ))}
                 </ul>
             </div>
@@ -146,7 +148,7 @@ const EducationCard: React.FC<EducationProps> = ({
                     {courses.map((course, i) => (
                         <span
                             key={i}
-                            className="px-3 py-1 text-sm bg-purple-900/40 rounded-lg border main-border hover:bg-purple-800/50 transition-all"
+                            className="px-3 py-1 text-sm bg-[#a822ca1e] rounded-lg border main-border hover:bg-purple-800/50 transition-all"
                         >
                             {course}
                         </span>
@@ -154,8 +156,8 @@ const EducationCard: React.FC<EducationProps> = ({
                 </div>
             </div>
             {
-                certificate && <div className="flex justify-end">
-                    <GlowButton href={certificate}>
+                certificateURL && <div className="flex justify-end">
+                    <GlowButton href={certificateURL}>
                         <span className="text-xs">View Certificate</span>
                     </GlowButton>
                 </div>

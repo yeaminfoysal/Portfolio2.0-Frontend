@@ -1,5 +1,5 @@
 import About from "@/components/modules/Home/About";
-import EducationCertification from "@/components/modules/Home/Education";
+import ExperienceEducationCertifications from "@/components/modules/Home/ExperienceEducationCertifications";
 import Hero from "@/components/modules/Home/Hero";
 import ProjectsSection from "@/components/modules/Home/Project";
 import Skills from "@/components/modules/Home/Skills";
@@ -9,9 +9,11 @@ export default function Home() {
     <div className="">
       <Hero />
       <About />
+      {/* <Experiance/> */}
       <Skills />
       <ProjectsSection />
-      <EducationCertification />
+      {/* <EducationCertification /> */}
+      <ExperienceEducationCertifications/>
     </div>
   );
 }

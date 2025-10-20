@@ -1,0 +1,50 @@
+[
+    {
+        "id": 1,
+        "position": "Frontend Engineer",
+        "company": "Ghuddy Limited",
+        "companyURL": "https://ghuddy.com",
+        "location": "Dhaka, Bangladesh",
+        "duration": "Jan 2025 - Oct 2025",
+        "status": "Full Time (Onsite)",
+        "achievements": [
+            "First Class First Position",
+            "Dean's List Award for Academic Excellence",
+            "Best Project Award in Final Year"
+        ],
+        "technologies": [
+            "React",
+            "TypeScript",
+            "Next.js",
+            "CSS",
+            "Tailwind CSS",
+            "Ant Design",
+            "Redux Toolkit",
+            "Firebase"
+        ]
+    },
+    {
+        "id": 2,
+        "position": "Frontend Engineer",
+        "company": "Ghuddy Limited",
+        "companyURL": "https://ghuddy.com",
+        "location": "Dhaka, Bangladesh",
+        "duration": "Jan 2025 - Oct 2025",
+        "status": "Full Time (Onsite)",
+        "achievements": [
+            "First Class First Position",
+            "Dean's List Award for Academic Excellence",
+            "Best Project Award in Final Year"
+        ],
+        "technologies": [
+            "React",
+            "TypeScript",
+            "Next.js",
+            "CSS",
+            "Tailwind CSS",
+            "Ant Design",
+            "Redux Toolkit",
+            "Firebase"
+        ]
+    }
+]
