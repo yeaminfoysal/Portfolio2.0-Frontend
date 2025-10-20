@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "degree": "Complete Web Development",
+        "institute": "Programming Hero",
+        "duration": "2022 - 2026",
+        "status": "22-23 (ongoing)",
+        "achievements": [
+            "First Class First Position",
+            "Dean's List Award for Academic Excellence",
+            "Best Project Award in Final Year"
+        ],
+        "courses": [
+            "Javascript",
+            "React Js",
+            "Node.js",
+            "Express.js",
+            "MongoDB",
+            "html & css"
+        ],
+        "certificateLink": "https://drive.google.com/file/d/15f9HZy6bz_QMnR5GtzFfOdc-gv77IQ7P/view?usp=sharing"
+    },
+    {
+        "id": 2,
+        "degree": "Complete Web Development",
+        "institute": "Programming Hero",
+        "duration": "2022 - 2026",
+        "status": "22-23 (ongoing)",
+        "achievements": [
+            "First Class First Position",
+            "Dean's List Award for Academic Excellence",
+            "Best Project Award in Final Year"
+        ],
+        "courses": [
+            "Javascript",
+            "React Js",
+            "Node.js",
+            "Express.js",
+            "MongoDB",
+            "html & css"
+        ],
+        "certificateLink": "https://drive.google.com/file/d/15f9HZy6bz_QMnR5GtzFfOdc-gv77IQ7P/view?usp=sharing"
+    }
+]

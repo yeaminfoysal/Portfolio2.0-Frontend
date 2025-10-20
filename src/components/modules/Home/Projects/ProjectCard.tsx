@@ -3,7 +3,6 @@
 import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import GlowButton from "@/components/shared/GlowButton";
 

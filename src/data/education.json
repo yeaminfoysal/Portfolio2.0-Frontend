@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "degree": "BSC in Computer Science & Engineering",
+        "institute": "Northern University Bangladesh",
+        "instituteURL": "https://nub.ac.bd",
+        "location": "Dhaka, Bangladesh",
+        "duration": "2023 - 2027",
+        "status": "22-23 (ongoing)",
+        "achievements": [
+            "First Class First Position",
+            "Dean's List Award for Academic Excellence",
+            "Best Project Award in Final Year"
+        ],
+        "courses": [
+            "Data Structures and Algorithms",
+            "Web Development",
+            "Database Management",
+            "Software Engineering",
+            "Artificial Intelligence"
+        ]
+    },
+    {
+        "id": 2,
+        "degree": "BSC in Computer Science & Engineering",
+        "institute": "Northern University Bangladesh",
+        "instituteURL": "https://nub.ac.bd",
+        "location": "Dhaka, Bangladesh",
+        "duration": "2023 - 2027",
+        "status": "22-23 (ongoing)",
+        "achievements": [
+            "First Class First Position",
+            "Dean's List Award for Academic Excellence",
+            "Best Project Award in Final Year"
+        ],
+        "courses": [
+            "Data Structures and Algorithms",
+            "Web Development",
+            "Database Management",
+            "Software Engineering",
+            "Artificial Intelligence"
+        ]
+    }
+]
