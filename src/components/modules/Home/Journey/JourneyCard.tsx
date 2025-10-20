@@ -2,29 +2,27 @@
 
 import GlowButton from "@/components/shared/GlowButton";
 import { motion } from "framer-motion";
-import { FaSchool, FaCalendarAlt, FaMedal, FaBookOpen, FaStar, FaGraduationCap } from "react-icons/fa";
+import { FaSchool, FaCalendarAlt, FaMedal, FaBookOpen, FaStar, FaGraduationCap, FaBriefcase, FaCertificate } from "react-icons/fa";
 
 type EducationProps = {
   degree?: string;
   position?: string;
-  institute: string;
+  institute?: string;
   company?: string;
   location?: string;
   duration: string;
   status: string;
   achievements: string[];
-  courses: string[];
-  technologies: string[];
+  courses?: string[];
+  technologies?: string[];
   certificateURL?: string,
   instituteURL?: string,
   companyURL?: string;
   isfirst: boolean,
   length: number
-  // isLast: boolean,
-  // index: number,
 };
 
-const ExperianceCard: React.FC<EducationProps> = ({
+const JourneyCard: React.FC<EducationProps> = ({
   degree,
   position,
   institute,
@@ -40,10 +38,7 @@ const ExperianceCard: React.FC<EducationProps> = ({
   companyURL,
   isfirst,
   length
-  // isLast,
-  // index,
 }) => {
-  console.log(certificateURL)
 
   return (
     <motion.div
@@ -51,36 +46,17 @@ const ExperianceCard: React.FC<EducationProps> = ({
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
       whileHover={{ scale: 1.02 }}
-      className="relative border border-purple-800/50 rounded-2xl p-6 shadow-lg backdrop-blur-md bg-background"
+      className="relative border border-purple-800/50 rounded-2xl p-10 shadow-lg backdrop-blur-md bg-background"
     >
-      {/* Animated background glow */}
-      {/* <motion.div
-                animate={{ opacity: [0.3, 1, 0.3] }}
-                transition={{ repeat: Infinity, duration: 3 }}
-                className="absolute left-1/2 top-1/2 -translate-y-1/2 w-[400px] h-[300px] bg-gradient blur-[80px] rounded-full"
-            /> */}
 
       {/* Glow icon */}
       <div className="absolute left-[-40px] top-6 p-3 main-bg rounded-full shadow-[0_0_10px_#a855f7]">
-        <FaGraduationCap size={25} color="#fff" />
+        {companyURL && <FaBriefcase size={25} color="#fff" />}
+        {instituteURL && <FaGraduationCap size={25} color="#fff" />}
+        {certificateURL && <FaCertificate size={25} color="#fff" />}
       </div>
 
       {/* Glow vertical line */}
-
-      {/* <div className={`absolute left-[-10px] top-8 w-[2px] h-[calc(100%${isLast ? "" : "+3rem"})] bg-gradient-to-b from-purple-500/80 to-purple-500/80`} /> */}
-
-      {/* <div
-                className={`absolute left-[-10px] top-14 w-[2px] ${isLast
-                    ? "h-[calc(100%-4rem)]"
-                    : "h-[calc(100%+3rem)]"
-                    } main-bg`}
-            ></div> */}
-      {/* <div
-                className={`${isfirst ? "" : "hidden"} absolute left-[-10px] top-14 w-[2px] ${length == 1
-                    ? "h-[calc(100%)]"
-                    : `h-[calc(100%*${length})]`
-                    } main-bg`}
-            ></div> */}
 
       {/* Animated glow vertical line (only once for first card) */}
       {isfirst && (
@@ -98,39 +74,37 @@ const ExperianceCard: React.FC<EducationProps> = ({
             initial={{ y: "100%" }}
             animate={{ y: ["100%", "2%"] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute left-0 w-full h-[calc(100%*1.2)] bg-gradient-to-b from-pink-600 via-purple-500 to-transparent 
-                 blur-2xl opacity-90"
-            style={{ filter: "drop-shadow(0 0 6px #a855f7)" }}
+            className={`absolute left-0 w-full h-[calc(100%*1.15)] bg-gradient-to-b from-[#ff0000] via-purple-500 to-transparent blur-xl opacity-90`}
+            style={{ filter: "drop-shadow(0 0 8px #a54af9)" }}
           />
         </div>
       )}
 
       {/* Header */}
-      <div className="flex justify-between items-start mb-4">
-        <h3 className="text-[19px] font-bold">
-
+      <div className="flex justify-between items-start mb-4 text-[#a54af9]">
+        <h3 className="text-[22px] font-bold">
           {degree || position}
         </h3>
-        <span className="flex items-center gap-2 text-sm main-txt/50  bg-purple-900/30 px-3 py-1 rounded-lg main-border">
+        <span className="flex items-center gap-2 text-sm font-medium main-txt/50  bg-[#a822ca11] px-3 py-1 rounded-lg main-border">
           <FaCalendarAlt /> {duration}
         </span>
       </div>
 
       {/* Institute Info */}
-      <div className="flex items-center gap-3 mb-4 bg-[#a822ca1e] p-3 rounded-md">
+      <div className="flex items-center gap-3 mb-4 bg-[#a822ca11] p-3 rounded-md">
         <span className="bg-[#a822ca29] p-3 rounded-md">
           <FaSchool className="main-txt text-xl" />
         </span>
         <div>
-          <p className="font-medium">{institute || company}</p>
+          <p className="font-semibold">{institute || company}</p>
           <p className="text-sm ">{location}</p>
         </div>
       </div>
 
       {/* Status */}
       <div className="flex items-center gap-2 mb-4 font-medium">
-        <FaStar className="text-pink-500" />
-        <span className="bg-[#a822ca1e] border main-border px-3 py-3  rounded-lg text-sm">
+        <FaStar className="main-txt" />
+        <span className="bg-[#a822ca11] border main-border px-3 py-3  rounded-lg text-sm">
           {status}
         </span>
       </div>
@@ -138,11 +112,11 @@ const ExperianceCard: React.FC<EducationProps> = ({
       {/* Achievements */}
       <div className="mb-5">
         <h4 className="flex items-center gap-2  font-semibold mb-2">
-          <FaMedal /> Achievements
+          <FaMedal className="main-txt" /> Achievements
         </h4>
         <ul className="space-y-2 text-foreground/80 text-sm list-disc list-inside">
           {achievements.map((ach, i) => (
-            <li className="bg-[#a822ca21] p-2 rounded-md" key={i}>{ach}</li>
+            <li className="bg-[#a822ca11] p-2 rounded-md" key={i}>{ach}</li>
           ))}
         </ul>
       </div>
@@ -150,14 +124,16 @@ const ExperianceCard: React.FC<EducationProps> = ({
       {/* Key Courses */}
       <div>
         <h4 className="flex items-center gap-2  font-semibold mb-3">
-          <FaBookOpen /> Key Courses
+          <FaBookOpen className="main-txt" />
+          {courses && 'Key courses'}
+          {technologies && 'Technologies'}
         </h4>
         <div className="flex flex-wrap gap-2">
           {
-            courses || technologies.map((course, i) => (
+            (courses || technologies as string[]).map((course, i) => (
               <span
                 key={i}
-                className="px-3 py-1 text-sm bg-[#a822ca1e] rounded-lg border main-border hover:bg-purple-800/50 transition-all"
+                className="px-3 py-1 text-sm bg-[#a822ca11] rounded-lg border main-border hover:bg-[#a822ca11]/50 transition-all"
               >
                 {course}
               </span>
@@ -166,23 +142,23 @@ const ExperianceCard: React.FC<EducationProps> = ({
         </div>
       </div>
       {
-        certificateURL && <div className="flex justify-end">
+        certificateURL && <div className="flex justify-end mt-4">
           <GlowButton href={certificateURL}>
-            <span className="text-xs">View Certificate</span>
+            <span className="text-sm">View Certificate</span>
           </GlowButton>
         </div>
       }
       {
-        instituteURL && <div className="flex justify-end">
+        instituteURL && <div className="flex justify-end  mt-4">
           <GlowButton href={instituteURL}>
-            <span className="text-xs">View institute</span>
+            <span className="text-sm">View institute</span>
           </GlowButton>
         </div>
       }
       {
-        companyURL && <div className="flex justify-end">
+        companyURL && <div className="flex justify-end  mt-4">
           <GlowButton href={companyURL}>
-            <span className="text-xs">View Company</span>
+            <span className="text-xm">View Company</span>
           </GlowButton>
         </div>
       }
@@ -190,4 +166,4 @@ const ExperianceCard: React.FC<EducationProps> = ({
   );
 };
 
-export default ExperianceCard;
+export default JourneyCard;

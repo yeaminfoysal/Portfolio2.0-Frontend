@@ -2,7 +2,7 @@
 
 import data from "@/data/education.json";
 import { motion } from "framer-motion";
-import ExperianceCard from "./Experiance/ExperianceCard";
+import ExperianceCard from "./Journey/JourneyCard";
 
 const Experiance = () => {
     return (
@@ -32,7 +32,7 @@ const Experiance = () => {
                             achievements={edu.achievements}
                             courses={edu.courses}
                             instituteURL={edu?.instituteURL}
-                            companyURL={edu?.companyURL}
+                            // companyURL={edu?.companyURL}
                             isfirst={index == 0}
                             length={data.length}
                         />

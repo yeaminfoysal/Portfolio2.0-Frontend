@@ -49,7 +49,7 @@ const EducationCertification = () => {
                                 duration={edu.duration}
                                 status={edu.status}
                                 achievements={edu.achievements}
-                                courses={edu.courses}
+                                courses={edu.technologies}
                                 isfirst={index == 0}
                                 length={data.length}
                                 certificateURL={edu.certificateURL}
