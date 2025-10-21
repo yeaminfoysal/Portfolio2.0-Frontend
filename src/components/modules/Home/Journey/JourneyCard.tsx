@@ -85,13 +85,13 @@ const JourneyCard: React.FC<EducationProps> = ({
         <h3 className="text-[22px] font-bold">
           {degree || position}
         </h3>
-        <span className="flex items-center gap-2 text-sm font-medium main-txt/50  bg-[#a822ca11] px-3 py-1 rounded-lg main-border">
+        <span className="flex items-center gap-2 text-sm font-medium main-txt/50  bg-[#a822ca19] px-3 py-1 rounded-lg main-border">
           <FaCalendarAlt /> {duration}
         </span>
       </div>
 
       {/* Institute Info */}
-      <div className="flex items-center gap-3 mb-4 bg-[#a822ca11] p-3 rounded-md">
+      <div className="flex items-center gap-3 mb-4 bg-[#a822ca19] p-3 rounded-md">
         <span className="bg-[#a822ca29] p-3 rounded-md">
           <FaSchool className="main-txt text-xl" />
         </span>
@@ -104,7 +104,7 @@ const JourneyCard: React.FC<EducationProps> = ({
       {/* Status */}
       <div className="flex items-center gap-2 mb-4 font-medium">
         <FaStar className="main-txt" />
-        <span className="bg-[#a822ca11] border main-border px-3 py-3  rounded-lg text-sm">
+        <span className="bg-[#a822ca19] border main-border px-3 py-3  rounded-lg text-sm">
           {status}
         </span>
       </div>
@@ -116,7 +116,7 @@ const JourneyCard: React.FC<EducationProps> = ({
         </h4>
         <ul className="space-y-2 text-foreground/80 text-sm list-disc list-inside">
           {achievements.map((ach, i) => (
-            <li className="bg-[#a822ca11] p-2 rounded-md" key={i}>{ach}</li>
+            <li className="bg-[#a822ca19] p-2 rounded-md" key={i}>{ach}</li>
           ))}
         </ul>
       </div>
@@ -133,7 +133,7 @@ const JourneyCard: React.FC<EducationProps> = ({
             (courses || technologies as string[]).map((course, i) => (
               <span
                 key={i}
-                className="px-3 py-1 text-sm bg-[#a822ca11] rounded-lg border main-border hover:bg-[#a822ca11]/50 transition-all"
+                className="px-3 py-1 text-sm bg-[#a822ca19] rounded-lg border main-border hover:bg-[#a822ca19]/50 transition-all"
               >
                 {course}
               </span>
