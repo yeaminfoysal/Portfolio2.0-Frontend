@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "title": "The Future of Online Education",
+    "author": "Dr. Nafisa Rahman",
+    "date": "2025-09-14",
+    "thumbnail": "/blogs/online-education.jpg",
+    "category": "E-Learning",
+    "tags": ["Online Learning", "Technology", "Future Education"],
+    "views": 1520,
+    "description": "Discover how online learning is shaping the future of education and what tools teachers can use to stay ahead.",
+    "content": "With the rapid advancement of technology, online education has transformed the way we learn. From virtual classrooms to AI-powered tutors, digital learning is creating new opportunities for both teachers and students..."
+  },
+  {
+    "id": 2,
+    "title": "Effective Teaching Strategies in the Digital Age",
+    "author": "Yeamin Foysal",
+    "date": "2025-08-20",
+    "thumbnail": "/blogs/effective-teaching.jpg",
+    "category": "Teaching",
+    "tags": ["Digital Tools", "Pedagogy", "Classroom"],
+    "views": 1785,
+    "description": "Explore modern teaching methods and how educators can adapt to digital learning environments.",
+    "content": "As technology becomes a part of everyday learning, teachers must adapt their strategies. Interactive quizzes, flipped classrooms, and collaborative tools like Google Classroom are changing the dynamics of education..."
+  },
+  {
+    "id": 3,
+    "title": "Why Emotional Intelligence Matters in Teaching",
+    "author": "Ayesha Siddiqua",
+    "date": "2025-07-10",
+    "thumbnail": "/blogs/emotional-inteligence.jpg",
+    "category": "Teacher Development",
+    "tags": ["Soft Skills", "Emotional Intelligence", "Communication"],
+    "views": 940,
+    "description": "Learn why emotional intelligence is a key skill for teachers to connect better with students and foster positive learning environments.",
+    "content": "Teaching isn’t just about delivering lessons; it’s about understanding emotions. Emotional intelligence helps teachers handle student behavior, build trust, and maintain classroom harmony..."
+  },
+  {
+    "id": 4,
+    "title": "Using AI Tools to Simplify Lesson Planning",
+    "author": "Rahim Uddin",
+    "date": "2025-06-02",
+    "thumbnail": "/blogs/ai.jpg",
+    "category": "EdTech",
+    "tags": ["AI", "Automation", "Lesson Planning"],
+    "views": 2100,
+    "description": "Discover how AI-powered tools are helping teachers plan lessons faster and personalize student learning.",
+    "content": "AI is no longer a buzzword—it’s a real teaching assistant. From generating lesson plans to recommending exercises, AI tools like ChatGPT and Google Gemini are transforming lesson preparation..."
+  },
+  {
+    "id": 5,
+    "title": "Gamification: Making Learning Fun and Engaging",
+    "author": "Tanvir Hasan",
+    "date": "2025-05-25",
+    "thumbnail": "/blogs/learning-fun.png",
+    "category": "Student Engagement",
+    "tags": ["Gamification", "Learning", "Motivation"],
+    "views": 1287,
+    "description": "Find out how game-based learning techniques can increase student engagement and improve retention.",
+    "content": "Students love games — and educators can use that passion to make lessons more interactive. Platforms like Kahoot and Classcraft are helping teachers turn study sessions into fun competitions..."
+  }
+]

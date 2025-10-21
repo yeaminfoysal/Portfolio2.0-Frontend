@@ -5,7 +5,7 @@ import { FaUserGraduate, FaBriefcase, FaCertificate } from "react-icons/fa";
 import certifications from "@/data/certifications.json";
 import education from "@/data/education.json";
 import experience from "@/data/experiance.json";
-import ExperianceCard from "./Journey/JourneyCard";
+import JourneyCard from "./Journey/JourneyCard";
 
 const tabs = [
     { id: "experience", label: "Experience", icon: <FaBriefcase /> },
@@ -71,7 +71,7 @@ export default function Journey() {
                     >
                         {activeTab === "experience" &&
                             (data as typeof experience).map((item, index) => (
-                                <ExperianceCard
+                                <JourneyCard
                                     key={item.id}
                                     position={item.position}
                                     company={item.company}
@@ -88,7 +88,7 @@ export default function Journey() {
 
                         {activeTab === "education" &&
                             (data as typeof education).map((item, index) => (
-                                <ExperianceCard
+                                <JourneyCard
                                     key={item.id}
                                     degree={item.degree}
                                     institute={item.institute}
@@ -105,7 +105,7 @@ export default function Journey() {
 
                         {activeTab === "certifications" &&
                             (data as typeof certifications).map((item, index) => (
-                                <ExperianceCard
+                                <JourneyCard
                                     key={item.id}
                                     degree={item.degree}
                                     institute={item.institute}

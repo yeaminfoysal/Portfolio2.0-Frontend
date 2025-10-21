@@ -46,7 +46,7 @@ const JourneyCard: React.FC<EducationProps> = ({
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
       whileHover={{ scale: 1.02 }}
-      className="relative border border-purple-800/50 rounded-2xl p-10 shadow-lg backdrop-blur-md bg-background"
+      className="relative border border-purple-800/50 rounded-2xl px-10 py-6 shadow-lg backdrop-blur-md bg-background"
     >
 
       {/* Glow icon */}
@@ -81,7 +81,7 @@ const JourneyCard: React.FC<EducationProps> = ({
       )}
 
       {/* Header */}
-      <div className="flex justify-between items-start mb-4 text-[#a54af9]">
+      <div className="flex justify-between items-start mb-4 ">
         <h3 className="text-[22px] font-bold">
           {degree || position}
         </h3>

@@ -1,97 +1,52 @@
-"use client";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { motion } from "framer-motion";
+import { FaEye, FaUserAlt } from "react-icons/fa";
 
-import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
-import { useRef } from "react";
-import Image from "next/image";
-import { FaExternalLinkAlt } from "react-icons/fa";
-import GlowButton from "@/components/shared/GlowButton";
-
-type ProjectProps = {
-  title: string;
-  image: string;
-  technologies: string[];
-  previewLink: string;
-  detailsLink: string;
-};
-
-const BlogCard: React.FC<ProjectProps> = ({
-  title,
-  image,
-  technologies,
-  previewLink,
-  detailsLink,
-}) => {
-  // Animated gradient motion
-  //   const radius = 150;
-  const borderRef = useRef<HTMLDivElement>(null);
-  const rotate = useMotionValue(0);
-
-  useAnimationFrame((t) => {
-    rotate.set((t / 100) % 360);
-  });
-
+const BlogCard = ({ blog, index }: { blog: any, index: number }) => {
   return (
-    <motion.div
-      whileHover={{ scale: 1.03, y: -5 }}
-      transition={{ type: "spring", stiffness: 200, damping: 15 }}
-      className="relative rounded-2xl p-[2px] overflow-hidden"
-    >
-      {/* Animated gradient border */}
       <motion.div
-        ref={borderRef}
-        style={{
-          borderRadius: "1rem",
-          width: "100%",
-          height: "100%",
-          position: "absolute",
-          inset: 0,
-        }}
-      />
-
-      {/* Card content */}
-      <div className="relative z-10 rounded-2xl p-5 shadow-lg flex flex-col  animated-border border">
-        <div className="relative w-full h-56 rounded-xl overflow-hidden mb-4">
-          <Image src={image} alt={title} fill className="object-cover rounded-xl" />
+        key={blog.id}
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        whileHover={{ scale: 1.03 }}
+        transition={{ duration: 0.5, delay: index * 0.1 }}
+        viewport={{ once: true }}
+        className="bg-background animated-border border z-10 relative rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 "
+      >
+        {/* Thumbnail */}
+        <div className="relative h-56 w-full p-1">
+          <motion.img
+            src={blog.thumbnail}
+            alt={blog.title}
+            className="rounded-lg h-full w-full object-cover hover:scale-110 transition-transform duration-500"
+          />
+          <span className="absolute top-4 left-4 main-bg text-white text-xs font-semibold px-3 py-1 rounded-full">
+            {blog.category}
+          </span>
         </div>
 
-        <h3 className="text-xl font-semibold mb-3">{title}</h3>
+        {/* Blog Content */}
+        <div className="p-5">
+          <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">
+            {blog.title}
+          </h3>
+          <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-3">
+            {blog.description}
+          </p>
 
-        <p className=" font-medium mb-2">Used Technologies:</p>
-
-        <div className="flex flex-wrap gap-2 mb-5">
-          {technologies.map((tech, i) => (
-            <span
-              key={i}
-              className="px-3 py-1 text-sm bg-purple-900/20  rounded-lg border main-border"
-            >
-              {tech}
-            </span>
-          ))}
+          {/* Footer */}
+          <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700 pt-3">
+            <div className="flex items-center gap-2">
+              <FaUserAlt className="main-txt" />
+              <span>{blog.author}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <FaEye className="main-txt" />
+              <span>{blog.views}</span>
+            </div>
+          </div>
         </div>
-
-        <div className="mt-auto flex gap-3 justify-between">
-          <GlowButton href={previewLink}>
-            <span className="text-sm">Preview</span> <FaExternalLinkAlt size={13} />
-          </GlowButton>
-          {/* <Link
-            
-            target="_blank"
-            className="flex items-center justify-center gap-2 w-1/2 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-all"
-          >
-            Preview Now <FaExternalLinkAlt size={14} />
-          </Link> */}
-          <GlowButton href={detailsLink}>
-            <span className="text-sm">Details</span> <FaExternalLinkAlt size={13} />
-          </GlowButton>
-          {/* <Link
-            
-            className="flex items-center justify-center gap-2 w-1/2 py-2 bg-purple-800 hover:bg-purple-900 text-white rounded-lg transition-all"
-          >
-            
-          </Link> */}
-        </div>
-      </div>
-    </motion.div>
+      </motion.div>
   );
 };
 
