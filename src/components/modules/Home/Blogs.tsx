@@ -2,20 +2,10 @@
 import { motion } from "framer-motion";
 import data from "@/data/blogs.json";
 import BlogCard from "../Blogs/BlogCard";
+import { Blog } from "@/type";
 
 // ✅ Define blog type
-interface Blog {
-  id: number;
-  title: string;
-  author: string;
-  date: string;
-  thumbnail: string;
-  category: string;
-  tags: string[];
-  views: number;
-  description: string;
-  content: string;
-}
+
 
 const BlogSection: React.FC = () => {
   const blogs: Blog[] = data;
