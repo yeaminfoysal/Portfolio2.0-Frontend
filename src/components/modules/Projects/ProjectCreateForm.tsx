@@ -20,7 +20,12 @@ import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { Plus, Trash } from "lucide-react";
 
-// 🧩 Validation Schema
+// ✅ FIX 1: Define a structured schema for the array item
+const featureItemSchema = z.object({
+  value: z.string().min(1, "Feature required"), 
+});
+
+// 🧩 Validation Schema (Updated)
 const projectSchema = z.object({
   title: z.string().min(3, "Title is required"),
   preview: z.string().url("Preview must be a valid URL"),
@@ -28,7 +33,7 @@ const projectSchema = z.object({
   category: z.enum(["Full-stack", "Frontend", "Backend"]).optional(),
   status: z.enum(["Ongoing", "Completed"]).optional(),
   isFeatured: z.boolean().optional(),
-  features: z.array(z.string().min(1, "Feature required")),
+  features: z.array(featureItemSchema), // Now an array of objects
   challenges: z.array(z.string()).optional(),
   plans: z.array(z.string()).optional(),
   technologies: z.object({
@@ -45,7 +50,32 @@ const projectSchema = z.object({
     .optional(),
 });
 
-type ProjectFormValues = z.infer<typeof projectSchema>;
+// ✅ FIX 2: Define the interface to match the new object structure
+interface IProjectFormValues {
+  title: string;
+  preview: string;
+  overview: string;
+  category?: "Full-stack" | "Frontend" | "Backend";
+  status?: "Ongoing" | "Completed";
+  isFeatured?: boolean;
+  features: { value: string }[]; // Array of objects
+  challenges?: string[];
+  plans?: string[];
+  technologies: {
+    frontend?: string[];
+    backend?: string[];
+    database?: string[];
+    tools?: string[];
+  };
+  repositories?: {
+    client?: string;
+    server?: string;
+  };
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type ProjectFormValues = IProjectFormValues;
+
 
 export default function ProjectCreateForm() {
   const [images, setImages] = useState<FileList | null>(null);
@@ -56,15 +86,16 @@ const {
   register,
   handleSubmit,
   control,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   reset,
   formState: { errors, isSubmitting },
-} = useForm<ProjectFormValues>({
+} = useForm<IProjectFormValues>({
   resolver: zodResolver(projectSchema),
   defaultValues: {
     title: "",
     preview: "",
     overview: "",
-    features: [""],
+    features: [{ value: "" }], // ✅ FIX 3: Default value must match the object structure
     technologies: {
       frontend: [""],
       backend: [""],
@@ -78,20 +109,25 @@ const {
   },
 });
 
-const { fields, append, remove } = useFieldArray({
+// ✅ FINAL FIX: The basic useFieldArray call now works because the structure is unambiguous
+const { fields, append, remove } = useFieldArray<IProjectFormValues>({
   control,
   name: "features" as const,
 });
 
 
-
-const onSubmit = async (values: ProjectFormValues) => {
+const onSubmit = async (values: IProjectFormValues) => {
   console.log("✅ onSubmit triggered with:", values);
     try {
       const formData = new FormData();
 
+      // Note: The structure of 'values.features' is now [{value: 'feature 1'}, ...]
+      // You might need to flatten it before sending to your backend if it expects string[]
+      const flatFeatures = values.features.map(f => f.value);
+
       const projectData = {
         ...values,
+        features: flatFeatures, // Flattened for backend if needed
         isFeatured,
       };
 
@@ -179,7 +215,8 @@ const onSubmit = async (values: ProjectFormValues) => {
               {fields.map((field, index) => (
                 <div key={field.id} className="flex gap-2">
                   <Input
-                    {...register(`features.${index}` as const)}
+                    // ✅ FIX 4: Register the field at the nested 'value' path
+                    {...register(`features.${index}.value` as const)}
                     placeholder={`Feature ${index + 1}`}
                   />
                   <Button
@@ -196,7 +233,8 @@ const onSubmit = async (values: ProjectFormValues) => {
                 type="button"
                 size="sm"
                 variant="outline"
-                onClick={() => append("")}
+                // Append an object with the 'value' field
+                onClick={() => append({ value: "" })} 
               >
                 <Plus className="w-4 h-4 mr-1" /> Add Feature
               </Button>
