@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { Plus, Trash } from "lucide-react";
+import GlowButton from "@/components/shared/GlowButton";
 
 // ✅ FIX 1: Define a structured schema for the array item
 const featureItemSchema = z.object({
@@ -326,13 +327,16 @@ const onSubmit = async (values: IProjectFormValues) => {
           </div>
 
           {/* Submit */}
-          <Button
-            type="submit"
-            className="w-full mt-4"
-            disabled={isSubmitting}
-          >
+          <GlowButton className="w-full" type="submit" isDisabled={isSubmitting}>
             {isSubmitting ? "Submitting..." : "Create Project"}
-          </Button>
+          </GlowButton>
+          {/* <Button
+            
+            className="w-full mt-4"
+            
+          >
+            
+          </Button> */}
         </form>
       </CardContent>
     </Card>

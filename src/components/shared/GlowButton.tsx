@@ -10,13 +10,14 @@ interface GlowButtonProps {
     className?: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     type?: any
+    isDisabled?: boolean
 }
 
-export default function GlowButton({ href, children, className, type }: GlowButtonProps) {
+export default function GlowButton({ href, children, className, type, isDisabled }: GlowButtonProps) {
     const InnerContent = (
         <div
             className={clsx(
-                "relative inline-block rounded-md overflow-hidden group border border-white/20 bg-white/10 py-1.5 px-2",
+                "relative inline-block rounded-md overflow-hidden group border border-white/20 bg-white/10 py-1.5 px-2 cursor-pointer",
                 className
             )}
         >
@@ -28,7 +29,8 @@ export default function GlowButton({ href, children, className, type }: GlowButt
             <span className="absolute inset-0 w-full h-full translate-x-[100%] bg-gradient-to-l from-transparent via-white/30 to-transparent group-hover:translate-x-[-100%] transition-transform duration-900 ease-out" />
 
             <button
-                className={`relative py-2.5 px-6 rounded-md btn-gradient text-white font-medium overflow-hidden ${className}`}
+                disabled={isDisabled}
+                className={`relative py-2.5 px-6 rounded-md  text-white font-medium cursor-pointer overflow-hidden ${className} ${isDisabled ? "bg-accent" : "btn-gradient"}`}
                 type={type ? type : "button"}
             >
                 <span className="relative z-10 flex items-center justify-center gap-2">{children}</span>
