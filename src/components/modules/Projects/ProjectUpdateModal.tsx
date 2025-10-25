@@ -119,18 +119,18 @@ export default function ProjectUpdateModal({ project }: { project: IProjectFormV
                 });
             }
 
-              const res = await fetch(
+            const res = await fetch(
                 `http://localhost:4000/api/projects/${project._id}`,
                 {
-                  method: "PATCH",
-                  body: formData,
+                    method: "PATCH",
+                    body: formData,
                 }
-              );
+            );
 
-              if (!res.ok) throw new Error("Failed to update project");
+            if (!res.ok) throw new Error("Failed to update project");
 
-              const result = await res.json();
-              console.log("✅ Update successful:", result);
+            const result = await res.json();
+            console.log("✅ Update successful:", result);
 
             setImages(null);
             setPreviewURLs([]);

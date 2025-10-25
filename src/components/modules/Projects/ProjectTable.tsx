@@ -33,7 +33,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import Image from "next/image"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import ProjectUpdateModal from "./ProjectUpdateModal"
 
 
