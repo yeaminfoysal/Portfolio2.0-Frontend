@@ -10,16 +10,18 @@ type ProjectProps = {
   title: string;
   image: string;
   technologies: string[];
-  previewLink: string;
+  preview: string;
   detailsLink: string;
+  overview: string
 };
 
 const ProjectCard: React.FC<ProjectProps> = ({
   title,
   image,
   technologies,
-  previewLink,
+  preview,
   detailsLink,
+  overview
 }) => {
   // Animated gradient motion
   //   const radius = 150;
@@ -29,7 +31,7 @@ const ProjectCard: React.FC<ProjectProps> = ({
   useAnimationFrame((t) => {
     rotate.set((t / 100) % 360);
   });
-
+  console.log(preview)
   return (
     <motion.div
       whileHover={{ scale: 1.03, y: -5 }}
@@ -49,17 +51,17 @@ const ProjectCard: React.FC<ProjectProps> = ({
       />
 
       {/* Card content */}
-      <div className="relative z-10 rounded-2xl p-5 shadow-lg flex flex-col  animated-border border">
+      <div className="relative z-10 rounded-2xl p-5 shadow-lg flex flex-col  animated-border border min-h-[550px]">
         <div className="relative w-full h-56 rounded-xl overflow-hidden mb-4">
           <Image src={image} alt={title} fill className="object-cover rounded-xl" />
         </div>
 
-        <h3 className="text-xl font-semibold mb-3">{title}</h3>
-
-        <p className=" font-medium mb-2">Used Technologies:</p>
+        <h3 className="text-xl font-semibold mb-2">{title}</h3>
+        <p className="text-sm mb-3 line-clamp-2 text-foreground/80">{overview}</p>
+        {/* <p className=" font-medium mb-2">Used Technologies:</p> */}
 
         <div className="flex flex-wrap gap-2 mb-5">
-          {technologies.map((tech, i) => (
+          {technologies.slice(0,10).map((tech, i) => (
             <span
               key={i}
               className="px-3 py-1 text-sm bg-purple-900/20  rounded-lg border main-border"
@@ -70,7 +72,7 @@ const ProjectCard: React.FC<ProjectProps> = ({
         </div>
 
         <div className="mt-auto flex gap-3 justify-between">
-          <GlowButton href={previewLink}>
+          <GlowButton href={preview}>
             <span className="text-sm">Preview</span> <FaExternalLinkAlt size={13} />
           </GlowButton>
           {/* <Link

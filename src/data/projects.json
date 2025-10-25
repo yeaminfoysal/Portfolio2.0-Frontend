@@ -4,7 +4,7 @@
     "title": "JobHive Hiring Agency Platform",
     "image": "/projects/ridemate.png",
     "technologies": ["React Js", "DaisyUi", "Tailwind CSS", "Next.js", "MongoDB", "NextAuth", "ZegoCloud", "Socket.io"],
-    "previewLink": "https://jobhive.example.com",
+    "preview": "https://jobhive.example.com",
     "detailsLink": "/projects/jobhive"
   },
   {
@@ -12,7 +12,7 @@
     "title": "WorkFlow Earning Platform",
     "image": "/projects/eduhaven.png",
     "technologies": ["React Js", "DaisyUi", "Tailwind CSS", "Express.js", "Node.js", "MongoDB", "Firebase"],
-    "previewLink": "https://workflow.example.com",
+    "preview": "https://workflow.example.com",
     "detailsLink": "/projects/workflow"
   },
   {
@@ -20,7 +20,7 @@
     "title": "Home Repair Service",
     "image": "/projects/whereisit.png",
     "technologies": ["React Js", "DaisyUi", "Tailwind CSS", "Express.js", "Node.js", "MongoDB", "Firebase"],
-    "previewLink": "https://homerepair.example.com",
+    "preview": "https://homerepair.example.com",
     "detailsLink": "/projects/homerepair"
   },
   {
@@ -28,7 +28,7 @@
     "title": "JobHive Hiring Agency Platform",
     "image": "/projects/ridemate.png",
     "technologies": ["React Js", "DaisyUi", "Tailwind CSS", "Next.js", "MongoDB", "NextAuth", "ZegoCloud", "Socket.io"],
-    "previewLink": "https://jobhive.example.com",
+    "preview": "https://jobhive.example.com",
     "detailsLink": "/projects/jobhive"
   },
   {
@@ -36,7 +36,7 @@
     "title": "WorkFlow Earning Platform",
     "image": "/projects/eduhaven.png",
     "technologies": ["React Js", "DaisyUi", "Tailwind CSS", "Express.js", "Node.js", "MongoDB", "Firebase"],
-    "previewLink": "https://workflow.example.com",
+    "preview": "https://workflow.example.com",
     "detailsLink": "/projects/workflow"
   },
   {
@@ -44,7 +44,7 @@
     "title": "Home Repair Service",
     "image": "/projects/whereisit.png",
     "technologies": ["React Js", "DaisyUi", "Tailwind CSS", "Express.js", "Node.js", "MongoDB", "Firebase"],
-    "previewLink": "https://homerepair.example.com",
+    "preview": "https://homerepair.example.com",
     "detailsLink": "/projects/homerepair"
   }
 ]

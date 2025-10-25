@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function DashboardPage() {
   return (
-    <div>DashboardPage</div>
+    <div className='px-6'>DashboardPage</div>
   )
 }

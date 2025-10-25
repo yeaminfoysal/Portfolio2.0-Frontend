@@ -6,9 +6,14 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="min-h-dvh flex gap-4">
+    <div className="flex">
+      {/* Fixed Sidebar */}
       <Sidebar />
-      <div className="flex-1">{children}</div>
-    </main>
+
+      {/* Scrollable main content area */}
+      <div className="ml-64 flex-1 min-h-screen overflow-y-auto">
+        {children}
+      </div>
+    </div>
   );
 }

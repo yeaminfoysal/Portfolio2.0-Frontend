@@ -23,7 +23,7 @@ import GlowButton from "@/components/shared/GlowButton";
 
 // ✅ FIX 1: Define a structured schema for the array item
 const featureItemSchema = z.object({
-  value: z.string().min(1, "Feature required"), 
+  value: z.string().min(1, "Feature required"),
 });
 
 // 🧩 Validation Schema (Updated)
@@ -83,42 +83,42 @@ export default function ProjectCreateForm() {
   const [previewURLs, setPreviewURLs] = useState<string[]>([]);
   const [isFeatured, setIsFeatured] = useState(false);
 
-const {
-  register,
-  handleSubmit,
-  control,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  reset,
-  formState: { errors, isSubmitting },
-} = useForm<IProjectFormValues>({
-  resolver: zodResolver(projectSchema),
-  defaultValues: {
-    title: "",
-    preview: "",
-    overview: "",
-    features: [{ value: "" }], // ✅ FIX 3: Default value must match the object structure
-    technologies: {
-      frontend: [""],
-      backend: [""],
-      database: [""],
-      tools: [""],
+  const {
+    register,
+    handleSubmit,
+    control,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<IProjectFormValues>({
+    resolver: zodResolver(projectSchema),
+    defaultValues: {
+      title: "",
+      preview: "",
+      overview: "",
+      features: [{ value: "" }], // ✅ FIX 3: Default value must match the object structure
+      technologies: {
+        frontend: [""],
+        backend: [""],
+        database: [""],
+        tools: [""],
+      },
+      repositories: {
+        client: "",
+        server: "",
+      },
     },
-    repositories: {
-      client: "",
-      server: "",
-    },
-  },
-});
+  });
 
-// ✅ FINAL FIX: The basic useFieldArray call now works because the structure is unambiguous
-const { fields, append, remove } = useFieldArray<IProjectFormValues>({
-  control,
-  name: "features" as const,
-});
+  // ✅ FINAL FIX: The basic useFieldArray call now works because the structure is unambiguous
+  const { fields, append, remove } = useFieldArray<IProjectFormValues>({
+    control,
+    name: "features" as const,
+  });
 
 
-const onSubmit = async (values: IProjectFormValues) => {
-  console.log("✅ onSubmit triggered with:", values);
+  const onSubmit = async (values: IProjectFormValues) => {
+    console.log("✅ onSubmit triggered with:", values);
     try {
       const formData = new FormData();
 
@@ -149,7 +149,7 @@ const onSubmit = async (values: IProjectFormValues) => {
 
       const result = await res.json();
       console.log(result);
-    //   reset();
+      //   reset();
       setImages(null);
       setPreviewURLs([]);
     } catch (err: any) {
@@ -235,7 +235,7 @@ const onSubmit = async (values: IProjectFormValues) => {
                 size="sm"
                 variant="outline"
                 // Append an object with the 'value' field
-                onClick={() => append({ value: "" })} 
+                onClick={() => append({ value: "" })}
               >
                 <Plus className="w-4 h-4 mr-1" /> Add Feature
               </Button>
