@@ -5,7 +5,6 @@ export default async function ManageProjects() {
   const res = await fetch("http://localhost:4000/api/projects");
   const data = await res.json();
   const projects = data?.data || [];
-  console.log(projects)
   return (
     <div className='max-w-5xl mx-auto mt-10 shadow-xl border border-border/40'>
       <ProjectTable projects={projects}/>

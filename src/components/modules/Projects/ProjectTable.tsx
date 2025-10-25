@@ -33,6 +33,9 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import Image from "next/image"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import ProjectUpdateModal from "./ProjectUpdateModal"
+
 
 export interface IProject {
     _id?: string
@@ -59,6 +62,52 @@ export interface IProject {
     createdAt?: Date
     updatedAt?: Date
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const ProjectActionsCell = ({ project }: { project: any }) => {
+    const [open, setOpen] = React.useState(false);
+
+    return (
+        <>
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="h-8 w-8 p-0">
+                        <span className="sr-only">Open menu</span>
+                        <MoreHorizontal />
+                    </Button>
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+
+                    {/* ✅ Update Project */}
+                    <DropdownMenuItem onClick={() => setOpen(true)}>
+                        Update Project
+                    </DropdownMenuItem>
+
+                    <DropdownMenuItem
+                        onClick={() => window.open(project.preview, "_blank")}
+                    >
+                        View Live
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* ✅ Update Modal */}
+            <Dialog open={open} onOpenChange={setOpen}>
+                <DialogContent
+                    className="w-[95vw] md:w-[90vw] lg:max-w-[800px] max-h-[90vh] overflow-y-auto border-none shadow-none bg-background"
+                >
+                    <ProjectUpdateModal project={project} />
+                </DialogContent>
+
+
+            </Dialog>
+        </>
+    );
+};
+
 
 export const columns: ColumnDef<IProject>[] = [
     {
@@ -122,8 +171,8 @@ export const columns: ColumnDef<IProject>[] = [
         cell: ({ row }) => (
             <span
                 className={`px-2 py-1 text-xs font-medium rounded-full ${row.getValue("status") === "Completed"
-                        ? "bg-green-100 text-green-800"
-                        : "bg-yellow-100 text-yellow-800"
+                    ? "bg-green-100 text-green-800"
+                    : "bg-yellow-100 text-yellow-800"
                     }`}
             >
                 {row.getValue("status")}
@@ -133,37 +182,9 @@ export const columns: ColumnDef<IProject>[] = [
     {
         id: "actions",
         enableHiding: false,
-        cell: ({ row }) => {
-            const project = row.original
+        cell: ({ row }) => <ProjectActionsCell project={row.original} />
+    }
 
-            return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem
-                            onClick={() =>
-                                navigator.clipboard.writeText(project.preview || "")
-                            }
-                        >
-                            Copy preview link
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem
-                            onClick={() => window.open(project.preview, "_blank")}
-                        >
-                            View Live
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            )
-        },
-    },
 ]
 
 export function ProjectTable({ projects }: { projects: IProject[] }) {
