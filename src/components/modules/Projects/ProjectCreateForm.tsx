@@ -143,6 +143,7 @@ export default function ProjectCreateForm() {
       const res = await fetch(`http://localhost:4000/api/projects`, {
         method: "POST",
         body: formData,
+        credentials: "include"
       });
 
       if (!res.ok) throw new Error("Failed to create project");

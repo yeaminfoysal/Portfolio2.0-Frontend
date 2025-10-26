@@ -49,7 +49,7 @@ export default function BlogUpdateModal({ blog }: { blog: IBlogFormValues }) {
             category: blog.category || ""
         },
     });
-    
+
     // ✅ Submit Handler
     const onSubmit = async (values: IBlogFormValues) => {
         try {
@@ -65,6 +65,7 @@ export default function BlogUpdateModal({ blog }: { blog: IBlogFormValues }) {
                 {
                     method: "PATCH",
                     body: formData,
+                    credentials: "include"
                 }
             );
 

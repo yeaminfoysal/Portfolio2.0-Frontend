@@ -124,6 +124,7 @@ export default function ProjectUpdateModal({ project }: { project: IProjectFormV
                 {
                     method: "PATCH",
                     body: formData,
+                    credentials: "include"
                 }
             );
 
