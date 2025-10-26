@@ -1,11 +1,13 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import { ModeToggle } from "./mode-toggle";
 import GlowButton from "./GlowButton";
+import { LogIn } from "lucide-react";
+import { Button } from "../ui/button";
 
 const Navbar = () => {
     const pathname = usePathname();
@@ -17,6 +19,12 @@ const Navbar = () => {
         { name: "Blogs", path: "/blogs" },
         { name: "Dashboard", path: "/dashboard" },
     ];
+
+    const router = useRouter();
+
+    const handleNavigate = () => {
+        router.push("/login"); // 👈 navigate to login page
+    };
 
     return (
         <nav className="fixed top-12 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1236px] rounded-full bg-[#a722ca]/10 dark:bg-[#a722ca]/10 backdrop-blur-lg border border-[#a722ca]/20 z-50">
@@ -42,6 +50,12 @@ const Navbar = () => {
                         </li>
                     ))}
                     <ModeToggle />
+                    <Button  onClick={handleNavigate} variant="outline" size="icon">
+                        <LogIn
+                            className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90"
+                        />
+                    </Button>
+
                     <GlowButton>Resume</GlowButton>
                 </ul>
 
