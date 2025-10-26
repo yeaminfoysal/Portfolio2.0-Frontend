@@ -1,4 +1,4 @@
-import { ProjectTable } from '@/components/modules/Projects/ProjectTable';
+import { ProjectTable } from '@/components/modules/Projects/ProjectsTable';
 import React from 'react'
 
 export default async function ManageProjects() {

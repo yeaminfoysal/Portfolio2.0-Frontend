@@ -17,7 +17,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import GlowButton from "@/components/shared/GlowButton";
+import { IBlogFormValues } from "./BlogCreateForm";
 
+
+// ✅ Main Zod Schema
 const blogSchema = z.object({
     title: z.string().min(3, "Title is required"),
     author: z.string().optional(),
@@ -26,68 +29,57 @@ const blogSchema = z.object({
     content: z.string().min(3, "Content is required"),
 });
 
-export interface IBlogFormValues {
-    _id?: string,
-    title: string;
-    author?: string;
-    thumbnail?: string;
-    category: string;
-    views?: number;
-    description: string;
-    content: string;
-}
-
-export default function BlogCreateForm() {
+// ✅ Component
+export default function BlogUpdateModal({ blog }: { blog: IBlogFormValues }) {
     const [image, setImage] = useState<File | null>(null);
     const [previewURL, setPreviewURL] = useState<string | null>(null);
 
     const {
         register,
         handleSubmit,
-        reset,
         formState: { errors, isSubmitting },
     } = useForm<IBlogFormValues>({
         resolver: zodResolver(blogSchema),
         defaultValues: {
-            title: "",
-            description: "",
-            content: "",
-            author: "",
-            category: "",
+            title: blog.title || "",
+            thumbnail: blog.thumbnail || "",
+            description: blog.description || "",
+            content: blog.content || "",
+            author: blog.author || "",
+            category: blog.category || ""
         },
     });
-
+    
+    // ✅ Submit Handler
     const onSubmit = async (values: IBlogFormValues) => {
-        console.log("✅ Submitting:", values);
         try {
             const formData = new FormData();
+            formData.append("data", JSON.stringify(values));
 
-            const blogData = {
-                ...values,
-            };
-
-            formData.append("data", JSON.stringify(blogData));
             if (image) {
                 formData.append("file", image);
             }
 
-            const res = await fetch(`http://localhost:4000/api/blogs`, {
-                method: "POST",
-                body: formData,
-            });
+            const res = await fetch(
+                `http://localhost:4000/api/blogs/${blog._id}`,
+                {
+                    method: "PATCH",
+                    body: formData,
+                }
+            );
 
-            if (!res.ok) throw new Error("Failed to create blog");
+            if (!res.ok) throw new Error("Failed to update blog");
 
             const result = await res.json();
-            console.log(result);
+            console.log("✅ Update successful:", result);
 
-            setPreviewURL(null);
             setImage(null);
-            reset();
+            setPreviewURL(null);
         } catch (err: any) {
-            console.error("❌ Submit error:", err);
+            console.error("❌ Update failed:", err);
         }
     };
+
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -98,83 +90,98 @@ export default function BlogCreateForm() {
     };
 
     return (
-        <Card className="max-w-3xl mx-auto mt-10 shadow-xl border border-border/40">
+        <Card className=" mx-auto border-none">
             <CardHeader>
                 <CardTitle className="text-2xl font-semibold text-center">
-                    Create New Blog 📝
+                    Update Project 🚀
                 </CardTitle>
             </CardHeader>
-
             <CardContent>
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                    {/* Title */}
-                    <div>
-                        <Label>Title</Label>
-                        <Input {...register("title")} placeholder="Blog title" />
-                        {errors.title && (
-                            <p className="text-red-500 text-sm">{errors.title.message}</p>
-                        )}
+                    {/* Basic Info */}
+                    <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <Label>Title</Label>
+                            <Input {...register("title")} placeholder="Project title" />
+                            {errors.title && (
+                                <p className="text-red-500 text-sm">{errors.title.message}</p>
+                            )}
+                        </div>
+
+                        <div>
+                            <Label>Thumbnail URL</Label>
+                            <Input {...register("thumbnail")} placeholder="https://example.com" />
+                            {errors.thumbnail && (
+                                <p className="text-red-500 text-sm">{errors.thumbnail.message}</p>
+                            )}
+                        </div>
                     </div>
 
-                    {/* Author */}
                     <div>
                         <Label>Author</Label>
-                        <Input {...register("author")} placeholder="Author name" />
+                        <Textarea
+                            {...register("author")}
+                            placeholder="Author"
+                            rows={4}
+                        />
                         {errors.author && (
                             <p className="text-red-500 text-sm">{errors.author.message}</p>
                         )}
                     </div>
 
-                    {/* Category */}
-                    <div>
-                        <Label>Category</Label>
-                        <select
-                            {...register("category")}
-                            className="w-full border rounded-md p-2 bg-background"
-                        >
-                            <option value="">Select category</option>
-                            <option value="Full-stack">Full-stack</option>
-                            <option value="Frontend">Frontend</option>
-                            <option value="Backend">Backend</option>
-                        </select>
-                        {errors.category && (
-                            <p className="text-red-500 text-sm">{errors.category.message}</p>
-                        )}
-                    </div>
-
-                    {/* Description */}
                     <div>
                         <Label>Description</Label>
                         <Textarea
                             {...register("description")}
-                            placeholder="Write a short description..."
-                            rows={3}
+                            placeholder="Write a short blog description..."
+                            rows={4}
                         />
                         {errors.description && (
-                            <p className="text-red-500 text-sm">
-                                {errors.description.message}
-                            </p>
+                            <p className="text-red-500 text-sm">{errors.description.message}</p>
                         )}
                     </div>
 
                     {/* Content */}
+                    <Separator />
                     <div>
                         <Label>Content</Label>
                         <Textarea
                             {...register("content")}
-                            placeholder="Write your content..."
-                            rows={5}
+                            placeholder="Write a short blog content..."
+                            rows={4}
                         />
                         {errors.content && (
                             <p className="text-red-500 text-sm">{errors.content.message}</p>
                         )}
                     </div>
 
-                    {/* Upload Thumbnail */}
+                    {/* Category */}
+                    <Separator />
+                    <div className="">
+                        <div>
+                            <Label>Category</Label>
+                            <select
+                                {...register("category")}
+                                className="w-full border rounded-md p-2 bg-background"
+                            >
+                                <option value="">Select...</option>
+                                <option value="Full-stack">Full-stack</option>
+                                <option value="Frontend">Frontend</option>
+                                <option value="Backend">Backend</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    {/* Upload Image */}
                     <Separator />
                     <div>
-                        <Label>Upload Thumbnail</Label>
-                        <Input type="file" accept="image/*" onChange={handleImageChange} />
+                        <Label>Upload Project Image</Label>
+                        <Input
+                            type="file"
+                            multiple
+                            accept="image/*"
+                            onChange={handleImageChange}
+                        />
                         {previewURL && (
                             <div className="mt-3 relative w-32 h-32 rounded-md overflow-hidden border">
                                 <Image
@@ -188,12 +195,8 @@ export default function BlogCreateForm() {
                     </div>
 
                     {/* Submit */}
-                    <GlowButton
-                        className="w-full"
-                        type="submit"
-                        isDisabled={isSubmitting}
-                    >
-                        {isSubmitting ? "Submitting..." : "Create Blog"}
+                    <GlowButton className="w-full" type="submit" isDisabled={isSubmitting}>
+                        {isSubmitting ? "Updating..." : "Update Blog"}
                     </GlowButton>
                 </form>
             </CardContent>
