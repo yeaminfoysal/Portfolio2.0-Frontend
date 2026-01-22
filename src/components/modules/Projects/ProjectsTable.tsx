@@ -97,8 +97,9 @@ const ProjectActionsCell = ({ project }: { project: any }) => {
             {/* ✅ Update Modal */}
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent
-                    className="w-[95vw] md:w-[90vw] lg:max-w-[800px] max-h-[90vh] overflow-y-auto border-none shadow-none bg-background"
-                >
+  className="w-[95vw] md:w-[90vw] lg:max-w-[800px] lg:min-w-[600px] max-h-[90vh] overflow-y-auto border-none shadow-none bg-background"
+>
+
                     <ProjectUpdateModal project={project} />
                 </DialogContent>
 

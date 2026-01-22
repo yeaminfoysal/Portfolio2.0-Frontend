@@ -110,7 +110,7 @@ export default function BlogCreateForm() {
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                     {/* Title */}
                     <div>
-                        <Label>Title</Label>
+                        <Label className="mb-2">Title</Label>
                         <Input {...register("title")} placeholder="Blog title" />
                         {errors.title && (
                             <p className="text-red-500 text-sm">{errors.title.message}</p>
@@ -119,7 +119,7 @@ export default function BlogCreateForm() {
 
                     {/* Author */}
                     <div>
-                        <Label>Author</Label>
+                        <Label className="mb-2">Author</Label>
                         <Input {...register("author")} placeholder="Author name" />
                         {errors.author && (
                             <p className="text-red-500 text-sm">{errors.author.message}</p>
@@ -128,7 +128,7 @@ export default function BlogCreateForm() {
 
                     {/* Category */}
                     <div>
-                        <Label>Category</Label>
+                        <Label className="mb-2">Category</Label>
                         <select
                             {...register("category")}
                             className="w-full border rounded-md p-2 bg-background"
@@ -145,7 +145,7 @@ export default function BlogCreateForm() {
 
                     {/* Description */}
                     <div>
-                        <Label>Description</Label>
+                        <Label className="mb-2">Description</Label>
                         <Textarea
                             {...register("description")}
                             placeholder="Write a short description..."
@@ -160,7 +160,7 @@ export default function BlogCreateForm() {
 
                     {/* Content */}
                     <div>
-                        <Label>Content</Label>
+                        <Label className="mb-2">Content</Label>
                         <Textarea
                             {...register("content")}
                             placeholder="Write your content..."
@@ -174,7 +174,7 @@ export default function BlogCreateForm() {
                     {/* Upload Thumbnail */}
                     <Separator />
                     <div>
-                        <Label>Upload Thumbnail</Label>
+                        <Label className="mb-2">Upload Thumbnail</Label>
                         <Input type="file" accept="image/*" onChange={handleImageChange} />
                         {previewURL && (
                             <div className="mt-3 relative w-32 h-32 rounded-md overflow-hidden border">

@@ -20,6 +20,7 @@ import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { Plus, Trash } from "lucide-react";
 import GlowButton from "@/components/shared/GlowButton";
+import toast from "react-hot-toast";
 
 // ✅ FIX 1: Define a structured schema for the array item
 const featureItemSchema = z.object({
@@ -35,8 +36,10 @@ const projectSchema = z.object({
   status: z.enum(["Ongoing", "Completed"]).optional(),
   isFeatured: z.boolean().optional(),
   features: z.array(featureItemSchema), // Now an array of objects
-  challenges: z.array(z.string()).optional(),
-  plans: z.array(z.string()).optional(),
+  challenges: z.array(featureItemSchema), // Now an array of objects
+  plans: z.array(featureItemSchema), // Now an array of objects
+  // challenges: z.array(z.string()).optional(),
+  // plans: z.array(z.string()).optional(),
   technologies: z.object({
     frontend: z.array(z.string()).optional(),
     backend: z.array(z.string()).optional(),
@@ -60,8 +63,8 @@ interface IProjectFormValues {
   status?: "Ongoing" | "Completed";
   isFeatured?: boolean;
   features: { value: string }[]; // Array of objects
-  challenges?: string[];
-  plans?: string[];
+  challenges: { value: string }[]; // Array of objects
+  plans: { value: string }[]; // Array of objects
   technologies: {
     frontend?: string[];
     backend?: string[];
@@ -97,6 +100,8 @@ export default function ProjectCreateForm() {
       preview: "",
       overview: "",
       features: [{ value: "" }], // ✅ FIX 3: Default value must match the object structure
+      challenges: [{ value: "" }], // ✅ FIX 3: Default value must match the object structure
+      plans: [{ value: "" }], // ✅ FIX 3: Default value must match the object structure
       technologies: {
         frontend: [""],
         backend: [""],
@@ -111,9 +116,17 @@ export default function ProjectCreateForm() {
   });
 
   // ✅ FINAL FIX: The basic useFieldArray call now works because the structure is unambiguous
-  const { fields, append, remove } = useFieldArray<IProjectFormValues>({
+  const { fields: featureFields, append: featureAppend, remove: featureRemove } = useFieldArray<IProjectFormValues>({
     control,
     name: "features" as const,
+  });
+  const { fields: challengeFields, append: challengeAppend, remove: challengeRemove } = useFieldArray<IProjectFormValues>({
+    control,
+    name: "challenges" as const,
+  });
+  const { fields: planFields, append: planAppend, remove: planRemove } = useFieldArray<IProjectFormValues>({
+    control,
+    name: "plans" as const,
   });
 
 
@@ -125,10 +138,14 @@ export default function ProjectCreateForm() {
       // Note: The structure of 'values.features' is now [{value: 'feature 1'}, ...]
       // You might need to flatten it before sending to your backend if it expects string[]
       const flatFeatures = values.features.map(f => f.value);
+      const flatChallenges = values.challenges.map(c => c.value);
+      const flatPlans = values.plans.map(p => p.value);
 
       const projectData = {
         ...values,
         features: flatFeatures, // Flattened for backend if needed
+        challenges: flatChallenges, // Flattened for backend if needed
+        plans: flatPlans, // Flattened for backend if needed
         isFeatured,
       };
 
@@ -150,11 +167,13 @@ export default function ProjectCreateForm() {
 
       const result = await res.json();
       console.log(result);
+      toast.success("Project created successfully! 🚀");
       //   reset();
       setImages(null);
       setPreviewURLs([]);
     } catch (err: any) {
       console.error(err);
+      toast.error(err.message || "Something went wrong!");
     }
   };
 
@@ -181,7 +200,7 @@ export default function ProjectCreateForm() {
           {/* Basic Info */}
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <Label>Title</Label>
+              <Label className="mb-2">Title</Label>
               <Input {...register("title")} placeholder="Project title" />
               {errors.title && (
                 <p className="text-red-500 text-sm">{errors.title.message}</p>
@@ -189,7 +208,7 @@ export default function ProjectCreateForm() {
             </div>
 
             <div>
-              <Label>Preview URL</Label>
+              <Label className="mb-2">Preview URL</Label>
               <Input {...register("preview")} placeholder="https://example.com" />
               {errors.preview && (
                 <p className="text-red-500 text-sm">{errors.preview.message}</p>
@@ -198,7 +217,7 @@ export default function ProjectCreateForm() {
           </div>
 
           <div>
-            <Label>Overview</Label>
+            <Label className="mb-2">Overview</Label>
             <Textarea
               {...register("overview")}
               placeholder="Write a short project overview..."
@@ -212,9 +231,9 @@ export default function ProjectCreateForm() {
           {/* Features */}
           <Separator />
           <div>
-            <Label>Features</Label>
+            <Label className="mb-2">Features</Label>
             <div className="space-y-2">
-              {fields.map((field, index) => (
+              {featureFields.map((field, index) => (
                 <div key={field.id} className="flex gap-2">
                   <Input
                     // ✅ FIX 4: Register the field at the nested 'value' path
@@ -225,7 +244,7 @@ export default function ProjectCreateForm() {
                     type="button"
                     size="icon"
                     variant="destructive"
-                    onClick={() => remove(index)}
+                    onClick={() => featureRemove(index)}
                   >
                     <Trash className="w-4 h-4" />
                   </Button>
@@ -236,18 +255,87 @@ export default function ProjectCreateForm() {
                 size="sm"
                 variant="outline"
                 // Append an object with the 'value' field
-                onClick={() => append({ value: "" })}
+                onClick={() => featureAppend({ value: "" })}
               >
                 <Plus className="w-4 h-4 mr-1" /> Add Feature
               </Button>
             </div>
           </div>
 
+          {/* Challenges */}
+          <Separator />
+          <div>
+            <Label className="mb-2">Challenges</Label>
+            <div className="space-y-2">
+              {challengeFields.map((field, index) => (
+                <div key={field.id} className="flex gap-2">
+                  <Input
+                    // ✅ FIX 4: Register the field at the nested 'value' path
+                    {...register(`challenges.${index}.value` as const)}
+                    placeholder={`Challenge ${index + 1}`}
+                  />
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="destructive"
+                    onClick={() => challengeRemove(index)}
+                  >
+                    <Trash className="w-4 h-4" />
+                  </Button>
+                </div>
+              ))}
+              <Button
+                type="button"
+                size="sm"
+                variant="outline"
+                // Append an object with the 'value' field
+                onClick={() => challengeAppend({ value: "" })}
+              >
+                <Plus className="w-4 h-4 mr-1" /> Add Challenge
+              </Button>
+            </div>
+          </div>
+
+          {/* plans */}
+          <Separator />
+          <div>
+            <Label className="mb-2">Plans</Label>
+            <div className="space-y-2">
+              {planFields.map((field, index) => (
+                <div key={field.id} className="flex gap-2">
+                  <Input
+                    // ✅ FIX 4: Register the field at the nested 'value' path
+                    {...register(`plans.${index}.value` as const)}
+                    placeholder={`Plan ${index + 1}`}
+                  />
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="destructive"
+                    onClick={() => planRemove(index)}
+                  >
+                    <Trash className="w-4 h-4" />
+                  </Button>
+                </div>
+              ))}
+              <Button
+                type="button"
+                size="sm"
+                variant="outline"
+                // Append an object with the 'value' field
+                onClick={() => planAppend({ value: "" })}
+              >
+                <Plus className="w-4 h-4 mr-1" /> Add Plan
+              </Button>
+            </div>
+          </div>
+
+
           {/* Category and Status */}
           <Separator />
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label>Category</Label>
+              <Label className="mb-2">Category</Label>
               <select
                 {...register("category")}
                 className="w-full border rounded-md p-2 bg-background"
@@ -258,7 +346,7 @@ export default function ProjectCreateForm() {
               </select>
             </div>
             <div>
-              <Label>Status</Label>
+              <Label className="mb-2">Status</Label>
               <select
                 {...register("status")}
                 className="w-full border rounded-md p-2 bg-background"
@@ -272,7 +360,7 @@ export default function ProjectCreateForm() {
           {/* Technologies */}
           <Separator />
           <div>
-            <Label>Technologies</Label>
+            <Label className="mb-2">Technologies</Label>
             <div className="grid md:grid-cols-2 gap-3 mt-2">
               <Input {...register("technologies.frontend.0")} placeholder="Frontend (e.g. React)" />
               <Input {...register("technologies.backend.0")} placeholder="Backend (e.g. Node.js)" />
@@ -285,11 +373,11 @@ export default function ProjectCreateForm() {
           <Separator />
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <Label>Client Repository</Label>
+              <Label className="mb-2">Client Repository</Label>
               <Input {...register("repositories.client")} placeholder="https://github.com/client" />
             </div>
             <div>
-              <Label>Server Repository</Label>
+              <Label className="mb-2">Server Repository</Label>
               <Input {...register("repositories.server")} placeholder="https://github.com/server" />
             </div>
           </div>
@@ -297,7 +385,7 @@ export default function ProjectCreateForm() {
           {/* Upload Images */}
           <Separator />
           <div>
-            <Label>Upload Project Images</Label>
+            <Label className="mb-2">Upload Project Images</Label>
             <Input
               type="file"
               multiple
@@ -323,7 +411,7 @@ export default function ProjectCreateForm() {
           {/* Featured Switch */}
           <Separator />
           <div className="flex items-center justify-between">
-            <Label>Feature this project?</Label>
+            <Label className="mb-2">Feature this project?</Label>
             <Switch checked={isFeatured} onCheckedChange={setIsFeatured} />
           </div>
 
@@ -339,7 +427,7 @@ export default function ProjectCreateForm() {
             
           </Button> */}
         </form>
-      </CardContent>
-    </Card>
+      </CardContent >
+    </Card >
   );
 }

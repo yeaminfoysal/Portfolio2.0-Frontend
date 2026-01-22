@@ -102,7 +102,7 @@ export default function BlogUpdateModal({ blog }: { blog: IBlogFormValues }) {
                     {/* Basic Info */}
                     <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                            <Label>Title</Label>
+                            <Label className="mb-2">Title</Label>
                             <Input {...register("title")} placeholder="Project title" />
                             {errors.title && (
                                 <p className="text-red-500 text-sm">{errors.title.message}</p>
@@ -110,7 +110,7 @@ export default function BlogUpdateModal({ blog }: { blog: IBlogFormValues }) {
                         </div>
 
                         <div>
-                            <Label>Thumbnail URL</Label>
+                            <Label className="mb-2">Thumbnail URL</Label>
                             <Input {...register("thumbnail")} placeholder="https://example.com" />
                             {errors.thumbnail && (
                                 <p className="text-red-500 text-sm">{errors.thumbnail.message}</p>
@@ -119,7 +119,7 @@ export default function BlogUpdateModal({ blog }: { blog: IBlogFormValues }) {
                     </div>
 
                     <div>
-                        <Label>Author</Label>
+                        <Label className="mb-2">Author</Label>
                         <Textarea
                             {...register("author")}
                             placeholder="Author"
@@ -131,7 +131,7 @@ export default function BlogUpdateModal({ blog }: { blog: IBlogFormValues }) {
                     </div>
 
                     <div>
-                        <Label>Description</Label>
+                        <Label className="mb-2">Description</Label>
                         <Textarea
                             {...register("description")}
                             placeholder="Write a short blog description..."
@@ -145,7 +145,7 @@ export default function BlogUpdateModal({ blog }: { blog: IBlogFormValues }) {
                     {/* Content */}
                     <Separator />
                     <div>
-                        <Label>Content</Label>
+                        <Label className="mb-2">Content</Label>
                         <Textarea
                             {...register("content")}
                             placeholder="Write a short blog content..."
@@ -160,7 +160,7 @@ export default function BlogUpdateModal({ blog }: { blog: IBlogFormValues }) {
                     <Separator />
                     <div className="">
                         <div>
-                            <Label>Category</Label>
+                            <Label className="mb-2">Category</Label>
                             <select
                                 {...register("category")}
                                 className="w-full border rounded-md p-2 bg-background"
@@ -176,7 +176,7 @@ export default function BlogUpdateModal({ blog }: { blog: IBlogFormValues }) {
                     {/* Upload Image */}
                     <Separator />
                     <div>
-                        <Label>Upload Project Image</Label>
+                        <Label className="mb-2">Upload Project Image</Label>
                         <Input
                             type="file"
                             multiple

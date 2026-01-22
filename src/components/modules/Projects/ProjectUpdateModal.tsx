@@ -20,6 +20,7 @@ import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { Plus, Trash } from "lucide-react";
 import GlowButton from "@/components/shared/GlowButton";
+import toast from "react-hot-toast";
 
 // ✅ Schema for Features (Array of objects)
 const featureItemSchema = z.object({
@@ -35,14 +36,15 @@ const projectSchema = z.object({
     status: z.enum(["Ongoing", "Completed"]).optional(),
     isFeatured: z.boolean().optional(),
     features: z.array(featureItemSchema),
-    challenges: z.array(z.string()).optional(),
-    plans: z.array(z.string()).optional(),
+    challenges: z.array(featureItemSchema),
+    plans: z.array(featureItemSchema),
     technologies: z.object({
-        frontend: z.array(z.string()).optional(),
-        backend: z.array(z.string()).optional(),
-        database: z.array(z.string()).optional(),
-        tools: z.array(z.string()).optional(),
+        frontend: z.union([z.string(), z.array(z.string())]).optional(),
+        backend: z.union([z.string(), z.array(z.string())]).optional(),
+        database: z.union([z.string(), z.array(z.string())]).optional(),
+        tools: z.union([z.string(), z.array(z.string())]).optional(),
     }),
+
     repositories: z
         .object({
             client: z.string().optional(),
@@ -54,6 +56,12 @@ const projectSchema = z.object({
 interface IProjectFormValues extends z.infer<typeof projectSchema> {
     _id?: string;
 }
+
+const toCommaString = (value?: string | string[]) => {
+    if (Array.isArray(value)) return value.join(", ");
+    return value || "";
+};
+
 
 // ✅ Component
 export default function ProjectUpdateModal({ project }: { project: IProjectFormValues }) {
@@ -81,11 +89,23 @@ export default function ProjectUpdateModal({ project }: { project: IProjectFormV
                         typeof f === "string" ? { value: f } : f
                     )
                     : [{ value: "" }],
+            challenges:
+                project?.challenges?.length > 0
+                    ? project.challenges.map((c) =>
+                        typeof c === "string" ? { value: c } : c
+                    )
+                    : [{ value: "" }],
+            plans:
+                project?.plans?.length > 0
+                    ? project.plans.map((p) =>
+                        typeof p === "string" ? { value: p } : p
+                    )
+                    : [{ value: "" }],
             technologies: {
-                // frontend: project?.technologies?.frontend || [""],
-                // backend: project?.technologies?.backend || [""],
-                // database: project?.technologies?.database || [""],
-                // tools: project?.technologies?.tools || [""],
+                frontend: toCommaString(project?.technologies?.frontend),
+                backend: toCommaString(project?.technologies?.backend),
+                database: toCommaString(project?.technologies?.database),
+                tools: toCommaString(project?.technologies?.tools),
             },
             repositories: {
                 client: project?.repositories?.client || "",
@@ -95,20 +115,34 @@ export default function ProjectUpdateModal({ project }: { project: IProjectFormV
     });
 
     // ✅ For dynamic feature fields
-    const { fields, append, remove } = useFieldArray({
+    // const { fields, append, remove } = useFieldArray({
+    //     control,
+    //     name: "features",
+    // });
+      const { fields: featureFields, append: featureAppend, remove: featureRemove } = useFieldArray<IProjectFormValues>({
         control,
-        name: "features",
-    });
+        name: "features" as const,
+      });
+      const { fields: challengeFields, append: challengeAppend, remove: challengeRemove } = useFieldArray<IProjectFormValues>({
+        control,
+        name: "challenges" as const,
+      });
+      const { fields: planFields, append: planAppend, remove: planRemove } = useFieldArray<IProjectFormValues>({
+        control,
+        name: "plans" as const,
+      });
+
     // ✅ Submit Handler
     const onSubmit = async (values: IProjectFormValues) => {
         try {
             const formData = new FormData();
 
-            const flatFeatures = values.features.map((f) => f.value);
 
             const projectData = {
                 ...values,
-                features: flatFeatures,
+                features: values.features.map(f => f.value),
+                challenges: values.challenges.map(c => c.value),
+                plans: values.plans.map(p => p.value),
                 isFeatured,
             };
 
@@ -132,11 +166,13 @@ export default function ProjectUpdateModal({ project }: { project: IProjectFormV
 
             const result = await res.json();
             console.log("✅ Update successful:", result);
+            toast.success("Project updated successfully! 🚀");
 
             setImages(null);
             setPreviewURLs([]);
         } catch (err: any) {
             console.error("❌ Update failed:", err);
+            toast.error(err.message || "Something went wrong!");
         }
     };
 
@@ -153,7 +189,7 @@ export default function ProjectUpdateModal({ project }: { project: IProjectFormV
     };
 
     return (
-        <Card className=" mx-auto border-none">
+        <Card className=" mx-auto border-none w-full">
             <CardHeader>
                 <CardTitle className="text-2xl font-semibold text-center">
                     Update Project 🚀
@@ -164,7 +200,7 @@ export default function ProjectUpdateModal({ project }: { project: IProjectFormV
                     {/* Basic Info */}
                     <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                            <Label>Title</Label>
+                            <Label className="mb-2">Title</Label>
                             <Input {...register("title")} placeholder="Project title" />
                             {errors.title && (
                                 <p className="text-red-500 text-sm">{errors.title.message}</p>
@@ -172,7 +208,7 @@ export default function ProjectUpdateModal({ project }: { project: IProjectFormV
                         </div>
 
                         <div>
-                            <Label>Preview URL</Label>
+                            <Label className="mb-2">Preview URL</Label>
                             <Input {...register("preview")} placeholder="https://example.com" />
                             {errors.preview && (
                                 <p className="text-red-500 text-sm">{errors.preview.message}</p>
@@ -181,7 +217,7 @@ export default function ProjectUpdateModal({ project }: { project: IProjectFormV
                     </div>
 
                     <div>
-                        <Label>Overview</Label>
+                        <Label className="mb-2">Overview</Label>
                         <Textarea
                             {...register("overview")}
                             placeholder="Write a short project overview..."
@@ -195,9 +231,9 @@ export default function ProjectUpdateModal({ project }: { project: IProjectFormV
                     {/* Features */}
                     <Separator />
                     <div>
-                        <Label>Features</Label>
+                        <Label className="mb-2">Features</Label>
                         <div className="space-y-2">
-                            {fields.map((field, index) => (
+                            {featureFields.map((field, index) => (
                                 <div key={field.id} className="flex gap-2">
                                     <Input
                                         {...register(`features.${index}.value`)}
@@ -207,7 +243,7 @@ export default function ProjectUpdateModal({ project }: { project: IProjectFormV
                                         type="button"
                                         size="icon"
                                         variant="destructive"
-                                        onClick={() => remove(index)}
+                                        onClick={() => featureRemove(index)}
                                     >
                                         <Trash className="w-4 h-4" />
                                     </Button>
@@ -217,9 +253,73 @@ export default function ProjectUpdateModal({ project }: { project: IProjectFormV
                                 type="button"
                                 size="sm"
                                 variant="outline"
-                                onClick={() => append({ value: "" })}
+                                onClick={() => featureAppend({ value: "" })}
                             >
                                 <Plus className="w-4 h-4 mr-1" /> Add Feature
+                            </Button>
+                        </div>
+                    </div>
+
+                    {/* Challenges */}
+                    <Separator />
+                    <div>
+                        <Label className="mb-2">Challenges</Label>
+                        <div className="space-y-2">
+                            {challengeFields.map((field, index) => (
+                                <div key={field.id} className="flex gap-2">
+                                    <Input
+                                        {...register(`challenges.${index}.value`)}
+                                        placeholder={`Challenge ${index + 1}`}
+                                    />
+                                    <Button
+                                        type="button"
+                                        size="icon"
+                                        variant="destructive"
+                                        onClick={() => challengeRemove(index)}
+                                    >
+                                        <Trash className="w-4 h-4" />
+                                    </Button>
+                                </div>
+                            ))}
+                            <Button
+                                type="button"
+                                size="sm"
+                                variant="outline"
+                                onClick={() => challengeAppend({ value: "" })}
+                            >
+                                <Plus className="w-4 h-4 mr-1" /> Add Challenge
+                            </Button>
+                        </div>
+                    </div>
+
+                    {/* Plans */}
+                    <Separator />
+                    <div>
+                        <Label className="mb-2">Plans</Label>
+                        <div className="space-y-2">
+                            {planFields.map((field, index) => (
+                                <div key={field.id} className="flex gap-2">
+                                    <Input
+                                        {...register(`plans.${index}.value`)}
+                                        placeholder={`Plan ${index + 1}`}
+                                    />
+                                    <Button
+                                        type="button"
+                                        size="icon"
+                                        variant="destructive"
+                                        onClick={() => planRemove(index)}
+                                    >
+                                        <Trash className="w-4 h-4" />
+                                    </Button>
+                                </div>
+                            ))}
+                            <Button
+                                type="button"
+                                size="sm"
+                                variant="outline"
+                                onClick={() => planAppend({ value: "" })}
+                            >
+                                <Plus className="w-4 h-4 mr-1" /> Add Plan
                             </Button>
                         </div>
                     </div>
@@ -228,7 +328,7 @@ export default function ProjectUpdateModal({ project }: { project: IProjectFormV
                     <Separator />
                     <div className="grid grid-cols-2 gap-4">
                         <div>
-                            <Label>Category</Label>
+                            <Label className="mb-2">Category</Label>
                             <select
                                 {...register("category")}
                                 className="w-full border rounded-md p-2 bg-background"
@@ -240,7 +340,7 @@ export default function ProjectUpdateModal({ project }: { project: IProjectFormV
                             </select>
                         </div>
                         <div>
-                            <Label>Status</Label>
+                            <Label className="mb-2">Status</Label>
                             <select
                                 {...register("status")}
                                 className="w-full border rounded-md p-2 bg-background"
@@ -255,28 +355,28 @@ export default function ProjectUpdateModal({ project }: { project: IProjectFormV
                     {/* Technologies */}
                     <Separator />
                     <div>
-                        <Label>Technologies</Label>
+                        <Label className="mb-2">Technologies</Label>
                         <div className="grid md:grid-cols-2 gap-3 mt-2">
                             <Input
-                                defaultValue={project?.technologies?.frontend?.join(", ") || ""}
-                                {...register("technologies.frontend.0")}
-                                placeholder="Frontend (e.g. React)"
+                                {...register("technologies.frontend")}
+                                placeholder="Frontend (React, Next.js)"
                             />
+
                             <Input
-                                defaultValue={project?.technologies?.backend?.join(", ") || ""}
-                                {...register("technologies.backend.0")}
-                                placeholder="Backend (e.g. Node.js)"
+                                {...register("technologies.backend")}
+                                placeholder="Backend (Node, Express)"
                             />
+
                             <Input
-                                defaultValue={project?.technologies?.database?.join(", ") || ""}
-                                {...register("technologies.database.0")}
-                                placeholder="Database (e.g. MongoDB)"
+                                {...register("technologies.database")}
+                                placeholder="Database (MongoDB)"
                             />
+
                             <Input
-                                defaultValue={project?.technologies?.tools?.join(", ") || ""}
-                                {...register("technologies.tools.0")}
-                                placeholder="Tools (e.g. Cloudinary)"
+                                {...register("technologies.tools")}
+                                placeholder="Tools (Stripe, Firebase)"
                             />
+
                         </div>
                     </div>
 
@@ -284,11 +384,11 @@ export default function ProjectUpdateModal({ project }: { project: IProjectFormV
                     <Separator />
                     <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                            <Label>Client Repository</Label>
+                            <Label className="mb-2">Client Repository</Label>
                             <Input {...register("repositories.client")} placeholder="https://github.com/client" />
                         </div>
                         <div>
-                            <Label>Server Repository</Label>
+                            <Label className="mb-2">Server Repository</Label>
                             <Input {...register("repositories.server")} placeholder="https://github.com/server" />
                         </div>
                     </div>
@@ -296,7 +396,7 @@ export default function ProjectUpdateModal({ project }: { project: IProjectFormV
                     {/* Upload Images */}
                     <Separator />
                     <div>
-                        <Label>Upload Project Images</Label>
+                        <Label className="mb-2">Upload Project Images</Label>
                         <Input
                             type="file"
                             multiple
@@ -322,7 +422,7 @@ export default function ProjectUpdateModal({ project }: { project: IProjectFormV
                     {/* Featured Switch */}
                     <Separator />
                     <div className="flex items-center justify-between">
-                        <Label>Feature this project?</Label>
+                        <Label className="mb-2">Feature this project?</Label>
                         <Switch checked={isFeatured} onCheckedChange={setIsFeatured} />
                     </div>
 
