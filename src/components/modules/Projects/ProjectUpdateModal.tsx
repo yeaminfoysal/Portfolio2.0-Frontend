@@ -34,6 +34,7 @@ const projectSchema = z.object({
     overview: z.string().min(10, "Overview is required"),
     category: z.enum(["Full-stack", "Frontend", "Backend"]).optional(),
     status: z.enum(["Ongoing", "Completed"]).optional(),
+    position: z.coerce.number().optional(),
     isFeatured: z.boolean().optional(),
     features: z.array(featureItemSchema),
     challenges: z.array(featureItemSchema),
@@ -53,9 +54,9 @@ const projectSchema = z.object({
         .optional(),
 });
 
-interface IProjectFormValues extends z.infer<typeof projectSchema> {
-    _id?: string;
-}
+// interface IProjectFormValues extends z.infer<typeof projectSchema> {
+//     _id?: string;
+// }
 
 const toCommaString = (value?: string | string[]) => {
     if (Array.isArray(value)) return value.join(", ");
@@ -64,9 +65,9 @@ const toCommaString = (value?: string | string[]) => {
 
 
 // ✅ Component
-export default function ProjectUpdateModal({ project }: { project: IProjectFormValues }) {
-    const [images, setImages] = useState<FileList | null>(null);
-    const [previewURLs, setPreviewURLs] = useState<string[]>([]);
+export default function ProjectUpdateModal({ project }: { project: any }) {
+    const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
+    const [fullImageFile, setFullImageFile] = useState<File | null>(null);
     const [isFeatured, setIsFeatured] = useState(project?.isFeatured || false);
 
     const {
@@ -74,30 +75,31 @@ export default function ProjectUpdateModal({ project }: { project: IProjectFormV
         handleSubmit,
         control,
         formState: { errors, isSubmitting },
-    } = useForm<IProjectFormValues>({
+    } = useForm<any>({
         resolver: zodResolver(projectSchema),
         defaultValues: {
             title: project?.title || "",
             preview: project?.preview || "",
             overview: project?.overview || "",
             category: project?.category,
+            position: project?.position,
             status: project?.status,
             isFeatured: project?.isFeatured || false,
             features:
                 project?.features?.length > 0
-                    ? project.features.map((f) =>
+                    ? project.features.map((f: any) =>
                         typeof f === "string" ? { value: f } : f
                     )
                     : [{ value: "" }],
             challenges:
                 project?.challenges?.length > 0
-                    ? project.challenges.map((c) =>
+                    ? project.challenges.map((c: any) =>
                         typeof c === "string" ? { value: c } : c
                     )
                     : [{ value: "" }],
             plans:
                 project?.plans?.length > 0
-                    ? project.plans.map((p) =>
+                    ? project.plans.map((p: any) =>
                         typeof p === "string" ? { value: p } : p
                     )
                     : [{ value: "" }],
@@ -119,39 +121,37 @@ export default function ProjectUpdateModal({ project }: { project: IProjectFormV
     //     control,
     //     name: "features",
     // });
-      const { fields: featureFields, append: featureAppend, remove: featureRemove } = useFieldArray<IProjectFormValues>({
+    const { fields: featureFields, append: featureAppend, remove: featureRemove } = useFieldArray<any>({
         control,
         name: "features" as const,
-      });
-      const { fields: challengeFields, append: challengeAppend, remove: challengeRemove } = useFieldArray<IProjectFormValues>({
+    });
+    const { fields: challengeFields, append: challengeAppend, remove: challengeRemove } = useFieldArray<any>({
         control,
         name: "challenges" as const,
-      });
-      const { fields: planFields, append: planAppend, remove: planRemove } = useFieldArray<IProjectFormValues>({
+    });
+    const { fields: planFields, append: planAppend, remove: planRemove } = useFieldArray<any>({
         control,
         name: "plans" as const,
-      });
+    });
 
     // ✅ Submit Handler
-    const onSubmit = async (values: IProjectFormValues) => {
+    const onSubmit = async (values: any) => {
         try {
             const formData = new FormData();
 
 
             const projectData = {
                 ...values,
-                features: values.features.map(f => f.value),
-                challenges: values.challenges.map(c => c.value),
-                plans: values.plans.map(p => p.value),
+                features: values.features.map((f: { value: any; }) => f.value),
+                challenges: values.challenges.map((c: { value: any; }) => c.value),
+                plans: values.plans.map((p: { value: any; }) => p.value),
                 isFeatured,
             };
 
             formData.append("data", JSON.stringify(projectData));
-            if (images) {
-                Array.from(images).forEach((file) => {
-                    formData.append("files", file);
-                });
-            }
+
+            if (thumbnailFile) formData.append("thumbnail", thumbnailFile);
+            if (fullImageFile) formData.append("fullImage", fullImageFile);
 
             const res = await fetch(
                 `http://localhost:4000/api/projects/${project._id}`,
@@ -168,25 +168,25 @@ export default function ProjectUpdateModal({ project }: { project: IProjectFormV
             console.log("✅ Update successful:", result);
             toast.success("Project updated successfully! 🚀");
 
-            setImages(null);
-            setPreviewURLs([]);
+            setFullImageFile(null);
+            setThumbnailFile(null);
         } catch (err: any) {
             console.error("❌ Update failed:", err);
             toast.error(err.message || "Something went wrong!");
         }
     };
 
-    // ✅ Handle image previews
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const files = e.target.files;
-        setImages(files);
-        if (files && files.length > 0) {
-            const urls = Array.from(files).map((file) => URL.createObjectURL(file));
-            setPreviewURLs(urls);
-        } else {
-            setPreviewURLs([]);
-        }
-    };
+    // // ✅ Handle image previews
+    // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     const files = e.target.files;
+    //     setImages(files);
+    //     if (files && files.length > 0) {
+    //         const urls = Array.from(files).map((file) => URL.createObjectURL(file));
+    //         setPreviewURLs(urls);
+    //     } else {
+    //         setPreviewURLs([]);
+    //     }
+    // };
 
     return (
         <Card className=" mx-auto border-none w-full">
@@ -203,17 +203,24 @@ export default function ProjectUpdateModal({ project }: { project: IProjectFormV
                             <Label className="mb-2">Title</Label>
                             <Input {...register("title")} placeholder="Project title" />
                             {errors.title && (
-                                <p className="text-red-500 text-sm">{errors.title.message}</p>
+                                <p className="text-red-500 text-sm">{typeof errors.title.message === 'string' ? errors.title.message : "Error occurred"}</p>
                             )}
                         </div>
-
                         <div>
-                            <Label className="mb-2">Preview URL</Label>
-                            <Input {...register("preview")} placeholder="https://example.com" />
-                            {errors.preview && (
-                                <p className="text-red-500 text-sm">{errors.preview.message}</p>
+                            <Label className="mb-2">Position</Label>
+                            <Input {...register("position")} placeholder="Project position" type="number" />
+                            {errors.position && (
+                                <p className="text-red-500 text-sm">{typeof errors.position.message === 'string' ? errors.position.message : "Error occurred"}</p>
                             )}
                         </div>
+                    </div>
+
+                    <div>
+                        <Label className="mb-2">Preview URL</Label>
+                        <Input {...register("preview")} placeholder="https://example.com" />
+                        {errors.preview && (
+                            <p className="text-red-500 text-sm">{typeof errors.preview.message === 'string' ? errors.preview.message : "Error occurred"}</p>
+                        )}
                     </div>
 
                     <div>
@@ -224,7 +231,7 @@ export default function ProjectUpdateModal({ project }: { project: IProjectFormV
                             rows={4}
                         />
                         {errors.overview && (
-                            <p className="text-red-500 text-sm">{errors.overview.message}</p>
+                            <p className="text-red-500 text-sm">{typeof errors.overview?.message === 'string' ? errors.overview.message : "Error occurred"}</p>
                         )}
                     </div>
 
@@ -395,29 +402,29 @@ export default function ProjectUpdateModal({ project }: { project: IProjectFormV
 
                     {/* Upload Images */}
                     <Separator />
-                    <div>
-                        <Label className="mb-2">Upload Project Images</Label>
-                        <Input
-                            type="file"
-                            multiple
-                            accept="image/*"
-                            onChange={handleImageChange}
-                        />
-                        {previewURLs.length > 0 && (
-                            <div className="flex flex-wrap gap-3 mt-3">
-                                {previewURLs.map((url, idx) => (
-                                    <div key={idx} className="relative w-24 h-24 rounded-md overflow-hidden border">
-                                        <Image
-                                            src={url}
-                                            alt={`Preview ${idx + 1}`}
-                                            fill
-                                            className="object-cover"
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                    </div>
+                    {/* Upload Images */}
+                    <Label className="mb-2">Thumbnail Image</Label>
+                    <Input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => setThumbnailFile(e.target.files?.[0] || null)}
+                    />
+
+                    <Label className="mb-2">Full Image</Label>
+                    <Input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => setFullImageFile(e.target.files?.[0] || null)}
+                    />
+
+                    {thumbnailFile && (
+                        <Image src={URL.createObjectURL(thumbnailFile)} alt="Thumbnail" width={100} height={100} />
+                    )}
+
+                    {fullImageFile && (
+                        <Image src={URL.createObjectURL(fullImageFile)} alt="Full Image" width={100} height={100} />
+                    )}
+
 
                     {/* Featured Switch */}
                     <Separator />

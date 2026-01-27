@@ -20,10 +20,11 @@ const ProjectsSection = async () => {
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project: any) => (
             <ProjectCard
+              id={project._id}
               key={project._id}
               title={project.title}
               overview={project.overview}
-              image={project.images?.[0]}
+              thumbnail={project.thumbnail}
               technologies={[
                 ...(project.technologies?.backend),
                 ...(project.technologies?.database),
