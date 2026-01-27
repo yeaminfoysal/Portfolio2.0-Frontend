@@ -61,6 +61,7 @@ interface IProjectFormValues {
   overview: string;
   category?: "Full-stack" | "Frontend" | "Backend";
   status?: "Ongoing" | "Completed";
+  position?: number;
   isFeatured?: boolean;
   features: { value: string }[]; // Array of objects
   challenges: { value: string }[]; // Array of objects
@@ -82,8 +83,8 @@ type ProjectFormValues = IProjectFormValues;
 
 
 export default function ProjectCreateForm() {
-  const [images, setImages] = useState<FileList | null>(null);
-  const [previewURLs, setPreviewURLs] = useState<string[]>([]);
+  const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
+  const [fullImageFile, setFullImageFile] = useState<File | null>(null);
   const [isFeatured, setIsFeatured] = useState(false);
 
   const {
@@ -99,6 +100,7 @@ export default function ProjectCreateForm() {
       title: "",
       preview: "",
       overview: "",
+      position: 0,
       features: [{ value: "" }], // ✅ FIX 3: Default value must match the object structure
       challenges: [{ value: "" }], // ✅ FIX 3: Default value must match the object structure
       plans: [{ value: "" }], // ✅ FIX 3: Default value must match the object structure
@@ -150,11 +152,10 @@ export default function ProjectCreateForm() {
       };
 
       formData.append("data", JSON.stringify(projectData));
-      if (images) {
-        Array.from(images).forEach((file) => {
-          formData.append("files", file);
-        });
-      }
+
+      if (thumbnailFile) formData.append("thumbnail", thumbnailFile);
+      if (fullImageFile) formData.append("fullImage", fullImageFile);
+
       console.log(formData)
 
       const res = await fetch(`http://localhost:4000/api/projects`, {
@@ -169,22 +170,11 @@ export default function ProjectCreateForm() {
       console.log(result);
       toast.success("Project created successfully! 🚀");
       //   reset();
-      setImages(null);
-      setPreviewURLs([]);
+      setFullImageFile(null);
+      setThumbnailFile(null);
     } catch (err: any) {
       console.error(err);
       toast.error(err.message || "Something went wrong!");
-    }
-  };
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    setImages(files);
-    if (files && files.length > 0) {
-      const urls = Array.from(files).map((file) => URL.createObjectURL(file));
-      setPreviewURLs(urls);
-    } else {
-      setPreviewURLs([]);
     }
   };
 
@@ -206,14 +196,21 @@ export default function ProjectCreateForm() {
                 <p className="text-red-500 text-sm">{errors.title.message}</p>
               )}
             </div>
-
             <div>
-              <Label className="mb-2">Preview URL</Label>
-              <Input {...register("preview")} placeholder="https://example.com" />
-              {errors.preview && (
-                <p className="text-red-500 text-sm">{errors.preview.message}</p>
+              <Label className="mb-2">Position</Label>
+              <Input {...register("position")} placeholder="Project position" type="number" />
+              {errors.position && (
+                <p className="text-red-500 text-sm">{errors.position.message}</p>
               )}
             </div>
+          </div>
+
+          <div>
+            <Label className="mb-2">Preview URL</Label>
+            <Input {...register("preview")} placeholder="https://example.com" />
+            {errors.preview && (
+              <p className="text-red-500 text-sm">{errors.preview.message}</p>
+            )}
           </div>
 
           <div>
@@ -383,30 +380,28 @@ export default function ProjectCreateForm() {
           </div>
 
           {/* Upload Images */}
-          <Separator />
-          <div>
-            <Label className="mb-2">Upload Project Images</Label>
-            <Input
-              type="file"
-              multiple
-              accept="image/*"
-              onChange={handleImageChange}
-            />
-            {previewURLs.length > 0 && (
-              <div className="flex flex-wrap gap-3 mt-3">
-                {previewURLs.map((url, idx) => (
-                  <div key={idx} className="relative w-24 h-24 rounded-md overflow-hidden border">
-                    <Image
-                      src={url}
-                      alt={`Preview ${idx + 1}`}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+          <Label className="mb-2">Thumbnail Image</Label>
+          <Input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setThumbnailFile(e.target.files?.[0] || null)}
+          />
+
+          <Label className="mb-2">Full Image</Label>
+          <Input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setFullImageFile(e.target.files?.[0] || null)}
+          />
+
+          {thumbnailFile && (
+            <Image src={URL.createObjectURL(thumbnailFile)} alt="Thumbnail" width={100} height={100} />
+          )}
+
+          {fullImageFile && (
+            <Image src={URL.createObjectURL(fullImageFile)} alt="Full Image" width={100} height={100} />
+          )}
+
 
           {/* Featured Switch */}
           <Separator />

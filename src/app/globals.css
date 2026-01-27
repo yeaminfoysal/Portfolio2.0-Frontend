@@ -244,6 +244,17 @@ pre[class*="language-"] {
       #bf00f9);
 }
 
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
 /* #9333ea, #06b6d4, #9333ea */
 
 @layer base {

@@ -40,7 +40,7 @@ import ProjectUpdateModal from "./ProjectUpdateModal"
 export interface IProject {
     _id?: string
     title: string
-    images: string[]
+    thumbnail: string
     technologies: {
         frontend?: string[]
         backend?: string[]
@@ -116,7 +116,7 @@ export const columns: ColumnDef<IProject>[] = [
         header: "Project Details",
         cell: ({ row }) => {
             const project = row.original
-            const firstImage = project.images?.[0]
+            const firstImage = project.thumbnail
 
             return (
                 <div className="flex items-start gap-4 py-2">

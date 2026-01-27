@@ -7,7 +7,7 @@ const ProjectsSection = async () => {
     const res = await fetch("http://localhost:4000/api/projects");
     const data = await res.json();
     const projects = data?.data || [];
-
+console.log(projects)
     return (
       <section className="py-20 relative">
         <div className="absolute w-[750px] h-[800px] rounded-full bg-gradient to-transparent opacity-20 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 blur-[160px] overflow-hidden"></div>
@@ -21,9 +21,10 @@ const ProjectsSection = async () => {
             {projects.map((project: any) => (
               <ProjectCard
                 key={project._id}
+                id={project._id}
                 title={project.title}
                 overview={project.overview}
-                image={project.images?.[0]}
+                thumbnail={project.thumbnail}
                 technologies={[
                 ...(project.technologies?.backend),
                 ...(project.technologies?.database),
