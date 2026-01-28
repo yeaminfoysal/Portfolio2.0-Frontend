@@ -205,19 +205,22 @@ export default function Hero() {
 
                 {/* Right: Code Block with Real-time Highlighted Typewriter */}
                 <div className="bg-gradient p-[1px] rounded-lg w-full max-w-xl banner-shadow">
+                    {/* Header - Dynamic background based on theme */}
                     <div className="flex items-center space-x-2 px-3 py-5 bg-white dark:bg-[#050709] rounded-t-lg">
                         <span className="w-3 h-3 bg-red-500 rounded-full"></span>
                         <span className="w-3 h-3 bg-yellow-500 rounded-full"></span>
                         <span className="w-3 h-3 bg-green-500 rounded-full"></span>
                     </div>
-                    <pre className="bg-[#050709] text-sm md:text-base overflow-x-auto p-4 rounded-b-lg relative overflow-hidden">
+
+                    {/* Code block - Dynamic background based on theme */}
+                    <pre className="bg-background text-sm md:text-base overflow-x-auto p-4 rounded-b-lg relative overflow-hidden transition-colors duration-300">
                         <div className="absolute w-[450px] h-[200px] rounded-full bg-gradient to-transparent opacity-20 left-30 top-36 blur-[80px] overflow-hidden"></div>
                         <code
                             className="language-javascript"
                             dangerouslySetInnerHTML={{ __html: highlightedHTML }}
                         />
                         {currentIndex < code.length && (
-                            <span className="animate-pulse text-white">|</span>
+                            <span className="animate-pulse text-gray-800 dark:text-white">|</span>
                         )}
                     </pre>
                 </div>

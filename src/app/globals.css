@@ -172,13 +172,13 @@ pre[class*="language-"],
 }
 
 /* Light mode syntax highlighting */
-.token.comment,
+/* .token.comment,
 .token.prolog,
 .token.doctype,
 .token.cdata {
   color: #999988 !important;
   font-style: italic;
-}
+} */
 
 .token.namespace {
   opacity: 0.7;
@@ -227,11 +227,11 @@ pre[class*="language-"],
 }
 
 /* Dark mode Prism colors */
-.dark pre[class*="language-"],
+/* .dark pre[class*="language-"],
 .dark :not(pre)>code[class*="language-"] {
   background-color: #050709 !important;
   color: #ccc !important;
-}
+} */
 
 .dark .token.comment,
 .dark .token.prolog,
