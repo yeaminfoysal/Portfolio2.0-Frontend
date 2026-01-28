@@ -1,12 +1,9 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
+
 import { Typewriter } from "react-simple-typewriter";
-
-
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Prism from "prismjs";
 import "prismjs/components/prism-javascript";
-import "prismjs/themes/prism-tomorrow.css"; // Dark theme
 import { useTheme } from "next-themes";
 import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
 import { FiGithub } from "react-icons/fi";
@@ -16,6 +13,12 @@ import GlowButton from "@/components/shared/GlowButton";
 
 export default function Hero() {
     const { theme } = useTheme();
+    const [displayedCode, setDisplayedCode] = useState('');
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [highlightedHTML, setHighlightedHTML] = useState('');
+    const [isTypingComplete, setIsTypingComplete] = useState(false);
+    const [startTyping, setStartTyping] = useState(false);
+
 
     const code = `const profile = {
   name: 'MD Yeamin Foysal',
@@ -33,19 +36,73 @@ export default function Hero() {
       this.skills.length >= 5
     );
   }
-};`;
+};`
+
+    //  useEffect(() => {
+    //         Prism.highlightAll();
+    //     }, [theme, code]); // code dependency 
+
+    // Typewriter effect
+
+    // Typewriter effect
+
 
     useEffect(() => {
-        // Dynamically import the correct Prism theme
-        if (theme === "dark") {
-            // @ts-ignore
-            import("prismjs/themes/prism-tomorrow.css");
-        } else {
-            // @ts-ignore
-            import("prismjs/themes/prism.css");
+        if (currentIndex < code.length) {
+            const timeout = setTimeout(() => {
+                setDisplayedCode(code.substring(0, currentIndex + 1));
+                setCurrentIndex(prev => prev + 1);
+            }, 20); // typing speed
+
+            return () => clearTimeout(timeout);
+        } else if (currentIndex === code.length && !isTypingComplete) {
+            setIsTypingComplete(true);
         }
-        Prism.highlightAll();
-    }, [theme]);
+    }, [currentIndex, code, isTypingComplete]);
+
+    // Typewriter effect with real-time highlighting
+    useEffect(() => {
+        if (currentIndex < code.length) {
+            const timeout = setTimeout(() => {
+                const newCode = code.substring(0, currentIndex + 1);
+                setDisplayedCode(newCode);
+
+                // Every character typing & highlighting
+                const highlighted = Prism.highlight(
+                    newCode,
+                    Prism.languages.javascript,
+                    'javascript'
+                );
+                setHighlightedHTML(highlighted);
+
+                setCurrentIndex(prev => prev + 1);
+            }, 20); // typing speed
+
+            return () => clearTimeout(timeout);
+        }
+    }, [currentIndex, code]);
+
+    // Theme change then re-highlighting
+    useEffect(() => {
+        if (displayedCode) {
+            const highlighted = Prism.highlight(
+                displayedCode,
+                Prism.languages.javascript,
+                'javascript'
+            );
+            setHighlightedHTML(highlighted);
+        }
+    }, [theme, displayedCode]);
+
+    // Start typing after 5 seconds
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setStartTyping(true);
+        }, 7000); // 5 seconds
+
+        return () => clearTimeout(timer);
+    }, []);
+
 
     return (
         <section className="py-20 relative">
@@ -55,7 +112,7 @@ export default function Hero() {
                 {/* <div className="absolute w-[450px] h-[450px] rounded-full bg-gradient-to-tr from-[#8851f7] via-[#5b2df5] to-transparent bottom-1 left-60 opacity-30  blur-[120px] overflow-hidden"></div> */}
 
                 {/* Left: Text */}
-                <div className="text-center xl:text-left space-y-6  flex-1">
+                <div className="text-center xl:text-left space-y-6  flex-1 my-12">
 
                     {/* Greeting */}
                     <h3 className="text-4xl font-semibold text-[var(--foreground)]">
@@ -63,18 +120,21 @@ export default function Hero() {
                     </h3>
 
                     {/* Title with Typewriter */}
-                    <h1 className="text-[55px] font-bold text-[var(--foreground)]">
+                    <h1 className="text-[52px] font-bold text-[var(--foreground)]">
                         <span className="inline-block gradient-txt-bg bg-clip-text text-transparent">
-                            <Typewriter
-                                words={["Full Stack Developer", "MERN Stack Engineer", "Creative Coder"]}
-                                loop={0}
-                                cursor
-                                cursorStyle={<span className="text-[#fff]">|</span>}
-                                cursorBlinking={false}
-                                typeSpeed={25}
-                                deleteSpeed={25}
-                                delaySpeed={1500}
-                            />
+                            {startTyping ? (
+                                <Typewriter
+                                    words={["Full Stack Developer", "MERN Developer", "Creative Coder"]}
+                                    loop={0}
+                                    cursor
+                                    cursorStyle={<span className="text-[#fff]">|</span>}
+                                    cursorBlinking={false}
+                                    typeSpeed={25}
+                                    deleteSpeed={25}
+                                    delaySpeed={1500}
+                                />
+                            ) : <>Full Stack Developer</>}
+
                         </span>
                     </h1>
 
@@ -130,7 +190,7 @@ export default function Hero() {
 
 
                 {/* Right: Code Block */}
-                <div className="bg-gradient p-[1px] rounded-lg w-full max-w-xl banner-shadow ">
+                {/* <div className="bg-gradient p-[1px] rounded-lg w-full max-w-xl banner-shadow ">
                     
                     <div className="flex items-center space-x-2 px-3 py-5 bg-white dark:bg-[#050709] rounded-t-lg">
                         <span className="w-3 h-3 bg-red-500 rounded-full"></span>
@@ -140,6 +200,25 @@ export default function Hero() {
                     <pre className="bg-[#050709] text-sm md:text-base overflow-x-auto p-4 rounded-b-lg relative overflow-hidden">
                         <div className="absolute w-[450px] h-[200px] rounded-full bg-gradient to-transparent opacity-20 left-30 top-36 blur-[80px] overflow-hidden"></div>
                         <code className="language-javascript">{code}</code>
+                    </pre>
+                </div> */}
+
+                {/* Right: Code Block with Real-time Highlighted Typewriter */}
+                <div className="bg-gradient p-[1px] rounded-lg w-full max-w-xl banner-shadow">
+                    <div className="flex items-center space-x-2 px-3 py-5 bg-white dark:bg-[#050709] rounded-t-lg">
+                        <span className="w-3 h-3 bg-red-500 rounded-full"></span>
+                        <span className="w-3 h-3 bg-yellow-500 rounded-full"></span>
+                        <span className="w-3 h-3 bg-green-500 rounded-full"></span>
+                    </div>
+                    <pre className="bg-[#050709] text-sm md:text-base overflow-x-auto p-4 rounded-b-lg relative overflow-hidden">
+                        <div className="absolute w-[450px] h-[200px] rounded-full bg-gradient to-transparent opacity-20 left-30 top-36 blur-[80px] overflow-hidden"></div>
+                        <code
+                            className="language-javascript"
+                            dangerouslySetInnerHTML={{ __html: highlightedHTML }}
+                        />
+                        {currentIndex < code.length && (
+                            <span className="animate-pulse text-white">|</span>
+                        )}
                     </pre>
                 </div>
             </div>
