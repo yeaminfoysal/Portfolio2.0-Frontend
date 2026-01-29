@@ -164,6 +164,30 @@
   }
 }
 
+/* ===== Scrollbar Width ===== */
+::-webkit-scrollbar {
+  width: 6px;        /* narrow scrollbar */
+  height: 16px;
+}
+
+/* ===== Scrollbar Track ===== */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ===== Scrollbar Thumb ===== */
+::-webkit-scrollbar-thumb {
+  background-color: #a722ca; /* primary color (purple example) */
+  border-radius: 10px;
+}
+
+/* Hover effect */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #840ea1;
+}
+
+
+/* Code Block style */
 /* Light mode Prism colors */
 pre[class*="language-"],
 :not(pre)>code[class*="language-"] {
