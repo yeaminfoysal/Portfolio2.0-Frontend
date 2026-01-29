@@ -110,7 +110,7 @@ export default function Hero() {
 
             <div className="flex flex-col xl:flex-row items-center justify-evenly max-w-7xl mx-auto  py-10 md:py-20  gap-10 transition-all duration-300 ">
 
-                <GlowEffect className="" />
+                <GlowEffect />
                 {/* <div className="absolute w-[450px] h-[450px] rounded-full bg-gradient-to-tr from-[#8851f7] via-[#5b2df5] to-transparent bottom-1 left-60 opacity-30  blur-[120px] overflow-hidden"></div> */}
 
                 {/* Left: Text */}

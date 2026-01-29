@@ -10,7 +10,9 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 import { Mail, Phone, MessageCircle } from "lucide-react";
 import GlowButton from "@/components/shared/GlowButton";
 import GlowEffect from "@/components/shared/GlowEffect";
-// import { toast } from "sonner";
+import emailjs from '@emailjs/browser';
+import { useState } from "react";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
     name: z.string().min(2, "Name is required"),
@@ -22,6 +24,8 @@ const formSchema = z.object({
 type ContactFormValues = z.infer<typeof formSchema>;
 
 export default function ContactSection() {
+    const [isLoading, setIsLoading] = useState(false);
+
     const form = useForm<ContactFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -32,17 +36,35 @@ export default function ContactSection() {
         },
     });
 
-    const onSubmit = (data: ContactFormValues) => {
-        console.log(data);
-        // toast.success("Message sent successfully!");
-        form.reset();
+    const onSubmit = async (data: ContactFormValues) => {
+        setIsLoading(true);
+
+        try {
+            await emailjs.send(
+                process.env.NEXT_PUBLIC_SERVICE_ID as string,   // service key 
+                process.env.NEXT_PUBLIC_TEMPLATE_ID as string,  // template id 
+                {
+                    from_name: data.name,
+                    from_email: data.email,
+                    subject: data.subject,
+                    message: data.message,
+                },
+                process.env.NEXT_PUBLIC_PUBLIC_KEY as string    // public key
+            );
+
+            toast.success("Message sent successfully!");
+            form.reset();
+        } catch (error) {
+            console.error('Email send failed:', error);
+            toast.error("Failed to send message. Please try again.");
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
         <section id="contact" className="w-full py-20 relative">
-
-            <GlowEffect className="" />
-            {/* <div className="absolute w-[750px] h-[500px] rounded-full bg-gradient to-transparent opacity-20 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 blur-[160px] overflow-hidden"></div> */}
+            <GlowEffect />
 
             <div className="max-w-7xl mx-auto relative">
                 <div className="text-center mb-10">
@@ -50,14 +72,14 @@ export default function ContactSection() {
                     <p className="text-gray-400">Feel free to reach out for any inquiries or feedback.</p>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-10 rounded-xl  py-6">
+                <div className="grid md:grid-cols-2 gap-10 rounded-xl py-6">
                     {/* Left Side */}
-                    <Card className=" border-none bg-background py-4 ">
+                    <Card className="border-none bg-background p-4">
                         <CardContent className="space-y-6 py-6 px-0">
                             <div>
                                 <h3 className="text-2xl font-semibold mb-3">Get in Touch</h3>
                                 <p className="text-gray-400">
-                                    I’m currently open to new opportunities. Whether you have a question or just want to say hi,
+                                    I&apos;m currently open to new opportunities. Whether you have a question or just want to say hi,
                                     my inbox is always open.
                                 </p>
                             </div>
@@ -65,23 +87,22 @@ export default function ContactSection() {
                             <div className="space-y-4">
                                 <div className="flex items-center gap-3 bg-[#a822ca28] p-5 rounded-xl border">
                                     <Mail className="main-txt" />
-                                    <a href="mailto:yeamin.foysal@example.com" className=" transition">
+                                    <a href="mailto:yeamin.foysal@example.com" className="transition">
                                         yeamin.foysal@example.com
                                     </a>
                                 </div>
 
                                 <div className="flex items-center gap-3 bg-[#a822ca28] p-5 rounded-xl border">
                                     <Phone className="main-txt" />
-                                    <p className="">+880 1234 567 890</p>
+                                    <p>+880 1234 567 890</p>
                                 </div>
 
                                 <div className="flex items-center gap-3 bg-[#a822ca28] p-5 rounded-xl border">
                                     <MessageCircle className="main-txt" />
-                                    <a
-                                        href="https://wa.me/8801234567890"
+
+                                    <a href="https://wa.me/8801234567890"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className=""
                                     >
                                         Chat on WhatsApp
                                     </a>
@@ -90,12 +111,11 @@ export default function ContactSection() {
                                 <div className="flex items-center gap-3 bg-[#a822ca28] p-5 rounded-xl border">
                                     <MessageCircle className="main-txt" />
                                     <a
-                                        href="https://wa.me/8801234567890"
+                                        href="https://linkedin.com/in/yourprofile"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className=""
                                     >
-                                        Chat on Linkedin
+                                        Chat on LinkedIn
                                     </a>
                                 </div>
                             </div>
@@ -103,7 +123,7 @@ export default function ContactSection() {
                     </Card>
 
                     {/* Right Side */}
-                    <Card className=" border-none  bg-background py-4">
+                    <Card className="border-none bg-background p-4">
                         <CardContent className="py-6 px-0">
                             <h3 className="text-2xl font-semibold mb-4">Leave a Message</h3>
 
@@ -114,7 +134,6 @@ export default function ContactSection() {
                                         name="name"
                                         render={({ field }) => (
                                             <FormItem>
-                                                {/* <FormLabel>Your Name</FormLabel> */}
                                                 <FormControl>
                                                     <Input
                                                         placeholder="Your Name"
@@ -132,10 +151,8 @@ export default function ContactSection() {
                                         name="subject"
                                         render={({ field }) => (
                                             <FormItem>
-                                                {/* <FormLabel>Your Email</FormLabel> */}
                                                 <FormControl>
                                                     <Input
-                                                        // type="email"
                                                         placeholder="Subject"
                                                         {...field}
                                                         className="!bg-[#a822ca28] focus:border-purple-400 p-5"
@@ -151,7 +168,6 @@ export default function ContactSection() {
                                         name="email"
                                         render={({ field }) => (
                                             <FormItem>
-                                                {/* <FormLabel>Your Email</FormLabel> */}
                                                 <FormControl>
                                                     <Input
                                                         type="email"
@@ -170,7 +186,6 @@ export default function ContactSection() {
                                         name="message"
                                         render={({ field }) => (
                                             <FormItem>
-                                                {/* <FormLabel>Your Message</FormLabel> */}
                                                 <FormControl>
                                                     <Textarea
                                                         placeholder="Write your message..."
@@ -183,10 +198,13 @@ export default function ContactSection() {
                                         )}
                                     />
 
-                                    <GlowButton type="submit" className="w-full text-center">
-                                        Send Message
+                                    <GlowButton
+                                        type="submit"
+                                        className="w-full text-center"
+                                        isDisabled={isLoading}
+                                    >
+                                        {isLoading ? "Sending..." : "Send Message"}
                                     </GlowButton>
-
                                 </form>
                             </Form>
                         </CardContent>

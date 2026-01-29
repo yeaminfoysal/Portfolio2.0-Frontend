@@ -36,7 +36,7 @@ export default function Journey() {
         <section className="w-full max-w-7xl mx-auto py-20 relative">
 
             {/* Glow Effect */}
-            <GlowEffect className="" />
+            <GlowEffect />
             {/* <div className="absolute w-[750px] h-[1000px] rounded-full bg-gradient to-transparent opacity-20 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 blur-[160px] overflow-hidden"></div> */}
 
             {/* Header */}
