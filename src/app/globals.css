@@ -189,11 +189,11 @@
 
 /* Code Block style */
 /* Light mode Prism colors */
-pre[class*="language-"],
+/* pre[class*="language-"],
 :not(pre)>code[class*="language-"] {
   background-color: #f9f9f9 !important;
   color: #393a34 !important;
-}
+} */
 
 /* Light mode syntax highlighting */
 .token.comment,
@@ -251,11 +251,11 @@ pre[class*="language-"],
 }
 
 /* Dark mode Prism colors */
-.dark pre[class*="language-"],
+/* .dark pre[class*="language-"],
 .dark :not(pre)>code[class*="language-"] {
   background-color: #050709 !important;
   color: #ccc !important;
-}
+} */
 
 .dark .token.comment,
 .dark .token.prolog,
