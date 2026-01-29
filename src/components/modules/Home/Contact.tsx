@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Mail, Phone, MessageCircle } from "lucide-react";
 import GlowButton from "@/components/shared/GlowButton";
+import GlowEffect from "@/components/shared/GlowEffect";
 // import { toast } from "sonner";
 
 const formSchema = z.object({
@@ -38,20 +39,21 @@ export default function ContactSection() {
     };
 
     return (
-        <section id="contact" className="w-full py-20 px-4 md:px-10 relative">
+        <section id="contact" className="w-full py-20 relative">
 
-            <div className="absolute w-[750px] h-[500px] rounded-full bg-gradient to-transparent opacity-20 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 blur-[160px] overflow-hidden"></div>
+            <GlowEffect className="" />
+            {/* <div className="absolute w-[750px] h-[500px] rounded-full bg-gradient to-transparent opacity-20 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 blur-[160px] overflow-hidden"></div> */}
 
-            <div className="max-w-6xl mx-auto relative">
+            <div className="max-w-7xl mx-auto relative">
                 <div className="text-center mb-10">
                     <h2 className="text-[55px] font-bold mb-2">Contact Me</h2>
                     <p className="text-gray-400">Feel free to reach out for any inquiries or feedback.</p>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-10 rounded-xl px-6 py-6">
+                <div className="grid md:grid-cols-2 gap-10 rounded-xl  py-6">
                     {/* Left Side */}
-                    <Card className=" border-none bg-background p-4">
-                        <CardContent className="space-y-6 p-6">
+                    <Card className=" border-none bg-background py-4 ">
+                        <CardContent className="space-y-6 py-6 px-0">
                             <div>
                                 <h3 className="text-2xl font-semibold mb-3">Get in Touch</h3>
                                 <p className="text-gray-400">
@@ -101,8 +103,8 @@ export default function ContactSection() {
                     </Card>
 
                     {/* Right Side */}
-                    <Card className=" border-none  bg-background p-4">
-                        <CardContent className="p-6">
+                    <Card className=" border-none  bg-background py-4">
+                        <CardContent className="py-6 px-0">
                             <h3 className="text-2xl font-semibold mb-4">Leave a Message</h3>
 
                             <Form {...form}>

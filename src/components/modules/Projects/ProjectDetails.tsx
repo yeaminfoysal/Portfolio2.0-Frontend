@@ -8,6 +8,7 @@ import Link from "next/link";
 import GlowButton from "@/components/shared/GlowButton";
 import { FaGithub } from "react-icons/fa";
 import AutoScrollImage from "./AutoScrollImage";
+import GlowEffect from "@/components/shared/GlowEffect";
 
 // Animation variants
 const containerVariants = {
@@ -207,7 +208,8 @@ export default function ProjectDetails({ project }: ProjectDetailsProps) {
 
                 <div className="relative">
                     {/* Glow Effect */}
-                    <div className="absolute w-[750px] h-[800px] rounded-full bg-gradient to-transparent opacity-20 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 blur-[160px] overflow-hidden"></div>
+                    <GlowEffect className="" />
+                    {/* <div className="absolute w-[750px] h-[800px] rounded-full bg-gradient to-transparent opacity-20 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 blur-[160px] overflow-hidden"></div> */}
 
                     {/* Tech Stack Section */}
                     <motion.div variants={itemVariants} className="mb-12">

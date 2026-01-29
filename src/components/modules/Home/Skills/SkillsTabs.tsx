@@ -53,7 +53,7 @@ export default function SkillsTabs() {
     return (
         <section className="relative ">
 
-            <div className=" mx-auto px-6">
+            <div className=" mx-auto">
                 {/* Tabs */}
                 <div className="flex justify-center gap-4 mb-10 flex-wrap">
                     {Object.keys(skillsData).map((category) => (

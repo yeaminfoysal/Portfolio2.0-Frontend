@@ -99,7 +99,7 @@ function ScrollingRow({
 export default function MovingSkills() {
     return (
         <section className=" text-center relative my-16">
-            <div className=" mx-auto px-4">
+            <div className=" mx-auto">
 
                 {/* 🔹 1st row → left to right */}
                 <ScrollingRow items={skillsRow1} reverse={false} speed={70} />

@@ -10,6 +10,7 @@ import { FiGithub } from "react-icons/fi";
 import Link from "next/link";
 import { MdArrowOutward } from "react-icons/md";
 import GlowButton from "@/components/shared/GlowButton";
+import GlowEffect from "@/components/shared/GlowEffect";
 
 export default function Hero() {
     const { theme } = useTheme();
@@ -107,8 +108,9 @@ export default function Hero() {
     return (
         <section className="py-20 relative">
 
-            <div className="flex flex-col xl:flex-row items-center justify-evenly max-w-7xl mx-auto  px-6 md:px-12 py-10 md:py-20  gap-10 transition-all duration-300 ">
+            <div className="flex flex-col xl:flex-row items-center justify-evenly max-w-7xl mx-auto  py-10 md:py-20  gap-10 transition-all duration-300 ">
 
+                <GlowEffect className="" />
                 {/* <div className="absolute w-[450px] h-[450px] rounded-full bg-gradient-to-tr from-[#8851f7] via-[#5b2df5] to-transparent bottom-1 left-60 opacity-30  blur-[120px] overflow-hidden"></div> */}
 
                 {/* Left: Text */}
