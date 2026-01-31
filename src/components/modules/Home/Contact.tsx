@@ -41,15 +41,15 @@ export default function ContactSection() {
 
         try {
             await emailjs.send(
-                process.env.NEXT_PUBLIC_SERVICE_ID as string,   // service key 
-                process.env.NEXT_PUBLIC_TEMPLATE_ID as string,  // template id 
+                process.env.NEXT_PUBLIC_SERVICE_ID as string,
+                process.env.NEXT_PUBLIC_TEMPLATE_ID as string,
                 {
                     from_name: data.name,
                     from_email: data.email,
                     subject: data.subject,
                     message: data.message,
                 },
-                process.env.NEXT_PUBLIC_PUBLIC_KEY as string    // public key
+                process.env.NEXT_PUBLIC_PUBLIC_KEY as string
             );
 
             toast.success("Message sent successfully!");
@@ -63,57 +63,59 @@ export default function ContactSection() {
     };
 
     return (
-        <section id="contact" className="w-full py-20 relative">
+        <section id="contact" className="w-full  py-16 md:py-20 relative">
             <GlowEffect />
 
             <div className="max-w-7xl mx-auto relative">
-                <div className="text-center mb-10">
-                    <h2 className="text-[55px] font-bold mb-2">Contact Me</h2>
-                    <p className="text-gray-400">Feel free to reach out for any inquiries or feedback.</p>
+                <div className="text-center mb-4 md:mb-10">
+                    <h2 className="text-3xl md:text-4xl lg:text-[55px] font-bold mb-2">Contact Me</h2>
+                    <p className="text-sm md:text-base text-gray-400">Feel free to reach out for any inquiries or feedback.</p>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-10 rounded-xl py-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 rounded-xl py-4 md:py-6">
                     {/* Left Side */}
-                    <Card className="border-none bg-background p-4">
-                        <CardContent className="space-y-6 py-6 px-0">
+                    <Card className="border-none bg-background p-3 md:p-4">
+                        <CardContent className="space-y-4 md:space-y-6 py-4 md:py-6 px-0">
                             <div>
-                                <h3 className="text-2xl font-semibold mb-3">Get in Touch</h3>
-                                <p className="text-gray-400">
+                                <h3 className="text-xl md:text-2xl font-semibold mb-2 md:mb-3">Get in Touch</h3>
+                                <p className="text-sm md:text-base text-gray-400">
                                     I&apos;m currently open to new opportunities. Whether you have a question or just want to say hi,
                                     my inbox is always open.
                                 </p>
                             </div>
 
-                            <div className="space-y-4">
-                                <div className="flex items-center gap-3 bg-[#a822ca28] p-5 rounded-xl border">
-                                    <Mail className="main-txt" />
-                                    <a href="mailto:yeamin.foysal@example.com" className="transition">
+                            <div className="space-y-3 md:space-y-4">
+                                <div className="flex items-center gap-2 md:gap-3 bg-[#a822ca28] p-3 md:p-5 rounded-lg md:rounded-xl border">
+                                    <Mail className="main-txt w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
+                                    <a href="mailto:yeamin.foysal@example.com" className="transition text-xs md:text-sm truncate">
                                         yeamin.foysal@example.com
                                     </a>
                                 </div>
 
-                                <div className="flex items-center gap-3 bg-[#a822ca28] p-5 rounded-xl border">
-                                    <Phone className="main-txt" />
-                                    <p>+880 1234 567 890</p>
+                                <div className="flex items-center gap-2 md:gap-3 bg-[#a822ca28] p-3 md:p-5 rounded-lg md:rounded-xl border">
+                                    <Phone className="main-txt w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
+                                    <p className="text-xs md:text-sm">+880 1234 567 890</p>
                                 </div>
 
-                                <div className="flex items-center gap-3 bg-[#a822ca28] p-5 rounded-xl border">
-                                    <MessageCircle className="main-txt" />
-
-                                    <a href="https://wa.me/8801234567890"
+                                <div className="flex items-center gap-2 md:gap-3 bg-[#a822ca28] p-3 md:p-5 rounded-lg md:rounded-xl border">
+                                    <MessageCircle className="main-txt w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
+                                    <a
+                                        href="https://wa.me/8801234567890"
                                         target="_blank"
                                         rel="noopener noreferrer"
+                                        className="text-xs md:text-sm"
                                     >
                                         Chat on WhatsApp
                                     </a>
                                 </div>
 
-                                <div className="flex items-center gap-3 bg-[#a822ca28] p-5 rounded-xl border">
-                                    <MessageCircle className="main-txt" />
+                                <div className="flex items-center gap-2 md:gap-3 bg-[#a822ca28] p-3 md:p-5 rounded-lg md:rounded-xl border">
+                                    <MessageCircle className="main-txt w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
                                     <a
                                         href="https://linkedin.com/in/yourprofile"
                                         target="_blank"
                                         rel="noopener noreferrer"
+                                        className="text-xs md:text-sm"
                                     >
                                         Chat on LinkedIn
                                     </a>
@@ -123,12 +125,12 @@ export default function ContactSection() {
                     </Card>
 
                     {/* Right Side */}
-                    <Card className="border-none bg-background p-4">
-                        <CardContent className="py-6 px-0">
-                            <h3 className="text-2xl font-semibold mb-4">Leave a Message</h3>
+                    <Card className="border-none bg-background p-3 md:p-4">
+                        <CardContent className="py-4 md:py-6 px-0">
+                            <h3 className="text-xl md:text-2xl font-semibold mb-3 md:mb-4">Leave a Message</h3>
 
                             <Form {...form}>
-                                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+                                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 md:space-y-5">
                                     <FormField
                                         control={form.control}
                                         name="name"
@@ -138,7 +140,7 @@ export default function ContactSection() {
                                                     <Input
                                                         placeholder="Your Name"
                                                         {...field}
-                                                        className="!bg-[#a822ca28] focus:border-purple-800 p-5"
+                                                        className="!bg-[#a822ca28] focus:border-purple-800 p-3 md:p-5 text-sm md:text-base"
                                                     />
                                                 </FormControl>
                                                 <FormMessage />
@@ -155,7 +157,7 @@ export default function ContactSection() {
                                                     <Input
                                                         placeholder="Subject"
                                                         {...field}
-                                                        className="!bg-[#a822ca28] focus:border-purple-400 p-5"
+                                                        className="!bg-[#a822ca28] focus:border-purple-400 p-3 md:p-5 text-sm md:text-base"
                                                     />
                                                 </FormControl>
                                                 <FormMessage />
@@ -173,7 +175,7 @@ export default function ContactSection() {
                                                         type="email"
                                                         placeholder="Your Email"
                                                         {...field}
-                                                        className="!bg-[#a822ca28] focus:border-purple-400 p-5"
+                                                        className="!bg-[#a822ca28] focus:border-purple-400 p-3 md:p-5 text-sm md:text-base"
                                                     />
                                                 </FormControl>
                                                 <FormMessage />
@@ -190,7 +192,7 @@ export default function ContactSection() {
                                                     <Textarea
                                                         placeholder="Write your message..."
                                                         {...field}
-                                                        className="!bg-[#a822ca28] focus:border-purple-400 min-h-[120px] p-5"
+                                                        className="!bg-[#a822ca28] focus:border-purple-400 min-h-[100px] md:min-h-[120px] p-3 md:p-5 text-sm md:text-base"
                                                     />
                                                 </FormControl>
                                                 <FormMessage />

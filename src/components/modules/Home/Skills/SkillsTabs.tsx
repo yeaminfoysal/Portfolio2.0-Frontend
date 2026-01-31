@@ -51,16 +51,15 @@ export default function SkillsTabs() {
     const [activeTab, setActiveTab] = useState<SkillCategories>("All");
 
     return (
-        <section className="relative ">
-
-            <div className=" mx-auto">
+        <section className="relative px-4 md:px-0">
+            <div className="mx-auto">
                 {/* Tabs */}
-                <div className="flex justify-center gap-4 mb-10 flex-wrap">
+                <div className="flex justify-center gap-2 md:gap-4 mb-6 md:mb-10 flex-wrap">
                     {Object.keys(skillsData).map((category) => (
                         <button
                             key={category}
                             onClick={() => setActiveTab(category as SkillCategories)}
-                            className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 
+                            className={`px-3 py-1.5 md:px-6 md:py-2 rounded-full text-xs md:text-sm font-medium transition-all duration-300 
                 ${activeTab === category
                                     ? "btn-gradient text-white"
                                     : "bg-white dark:bg-[#141414] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#1a1a1a]"
@@ -72,24 +71,28 @@ export default function SkillsTabs() {
                 </div>
 
                 {/* Skills Grid */}
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                     {skillsData[activeTab].map((skill, idx) => (
                         <motion.div
                             key={idx}
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.4, delay: idx * 0.05 }}
-                            className="bg-background border border-gray-200 dark:border-gray-800 rounded-xl p-5 shadow-sm hover:shadow-md transition-all"
+                            className="bg-background border border-gray-200 dark:border-gray-800 rounded-lg md:rounded-xl p-4 md:p-5 shadow-sm hover:shadow-md transition-all"
                         >
-                            <div className="flex items-center gap-3 mb-4">
-                                <div className="p-2 bg-orange-50 dark:bg-[#1a1a1a] rounded-md text-2xl">{skill.icon}</div>
-                                <h3 className="text-lg font-semibold text-gray-800 dark:text-white">{skill.name}</h3>
-                                <span className="ml-auto text-sm text-gray-600 dark:text-gray-400 font-medium">
+                            <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
+                                <div className="p-1.5 md:p-2 bg-orange-50 dark:bg-[#1a1a1a] rounded-md text-lg md:text-2xl">
+                                    {skill.icon}
+                                </div>
+                                <h3 className="text-sm md:text-lg font-semibold text-gray-800 dark:text-white flex-1 truncate">
+                                    {skill.name}
+                                </h3>
+                                <span className="text-xs md:text-sm text-gray-600 dark:text-gray-400 font-medium">
                                     {skill.level}%
                                 </span>
                             </div>
 
-                            <div className="h-2 w-full bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
+                            <div className="h-1.5 md:h-2 w-full bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
                                 <motion.div
                                     initial={{ width: 0 }}
                                     animate={{ width: `${skill.level}%` }}

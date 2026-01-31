@@ -7,12 +7,12 @@ import GlowEffect from '@/components/shared/GlowEffect';
 
 const About = () => {
     return (
-        <div className='section max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center py-24 gap-10 2xl:gap-20 relative'>
+        <div className='section max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center  py-16 md:py-20 gap-10 2xl:gap-20 relative'>
 
             <GlowEffect />
             {/* <div className="absolute w-[550px] h-[300px] rounded-full bg-gradient to-transparent opacity-20 left-0 -top-60 blur-[120px] overflow-hidden"></div> */}
 
-            <div className='relative dark:bg-none bg-background py-4 md:py-8 shadow-2xl rounded-2xl w-full max-w-[280px] sm:max-w-[320px] md:max-w-[400px] lg:max-w-none'>
+            <div className='relative dark:bg-none bg-background py-4 md:py-8 shadow-2xl rounded-2xl w-full max-w-[280px] sm:max-w-[320px] md:max-w-[400px] '>
                 <div className='bg-secondery mx-auto rounded-2xl'>
                     <Image 
                         className='mx-auto w-full h-auto' 

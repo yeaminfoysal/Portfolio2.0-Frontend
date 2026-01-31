@@ -2,19 +2,21 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-// import { Button } from "@/components/ui/button";
 import {
   Home,
   FolderKanban,
   PlusCircle,
   FileText,
-  // LogOut,
+  X,
 } from "lucide-react";
-// import { signOut, useSession } from "next-auth/react";
 
-export default function Sidebar() {
+interface SidebarProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+}
+
+export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
   const pathname = usePathname();
-  // const session = useSession();
 
   const links = [
     { href: "/", label: "Home", icon: Home },
@@ -25,47 +27,53 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="fixed flex h-screen w-64 flex-col border-r border-gray-800 bg-gray-900 text-gray-200 ">
+    <>
+      {/* Mobile Overlay */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={onClose}
+        />
+      )}
 
-      {/* Top section */}
-      <div className="p-6 text-xl font-semibold tracking-wide text-center border-b border-gray-700 ">
-        Dashboard
-      </div>
-
-      {/* Navigation Links */}
-      <nav className="flex-1 space-y-2 p-4">
-        {links.map(({ href, label, icon: Icon }) => (
-          <Link
-            key={href}
-            href={href}
-            className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 
-              ${pathname === href
-                ? "bg-gray-100 text-black"
-                : "hover:bg-gray-800 hover:text-white"
-              }`}
+      {/* Sidebar */}
+      <aside
+        className={`fixed top-0 left-0 z-50 flex h-screen w-64 flex-col border-r border-gray-800 bg-gray-900 text-gray-200 transition-transform duration-300 lg:translate-x-0 ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        {/* Top section */}
+        <div className="p-6 text-xl font-semibold tracking-wide text-center border-b border-gray-700 flex items-center justify-between">
+          <span>Dashboard</span>
+          {/* Close button (mobile only) */}
+          <button
+            onClick={onClose}
+            className="lg:hidden text-gray-400 hover:text-white"
           >
-            <Icon className="h-4 w-4" />
-            {label}
-          </Link>
-        ))}
-      </nav>
+            <X className="h-6 w-6" />
+          </button>
+        </div>
 
-      {/* Bottom Section */}
-      {/* <div className="p-4 border-t border-gray-700">
-        {session?.status === "authenticated" && (
-          <Button
-            variant="destructive"
-            className="w-full justify-start gap-2 cursor-pointer"
-            onClick={() => {
-              console.log("Logout clicked");
-              signOut();
-            }}
-          >
-            <LogOut className="h-4 w-4" />
-            Logout
-          </Button>
-        )}
-      </div> */}
-    </aside>
+        {/* Navigation Links */}
+        <nav className="flex-1 space-y-2 p-4 overflow-y-auto">
+          {links.map(({ href, label, icon: Icon }) => (
+            <Link
+              key={href}
+              href={href}
+              onClick={onClose} // Close sidebar on mobile after clicking
+              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 
+                ${
+                  pathname === href
+                    ? "bg-gray-100 text-black"
+                    : "hover:bg-gray-800 hover:text-white"
+                }`}
+            >
+              <Icon className="h-4 w-4" />
+              {label}
+            </Link>
+          ))}
+        </nav>
+      </aside>
+    </>
   );
 }

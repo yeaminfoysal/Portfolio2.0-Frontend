@@ -66,8 +66,8 @@ function ScrollingRow({
     });
 
     return (
-        <div className="overflow-hidden whitespace-nowrap my-2 relative py-4">
-            <div ref={containerRef} className="flex gap-6 items-center">
+        <div className="overflow-hidden whitespace-nowrap my-2 relative py-2 md:py-4">
+            <div ref={containerRef} className="flex gap-3 md:gap-6 items-center">
                 {[...items, ...items].map((item, i) => (
                     <motion.div
                         key={i}
@@ -75,32 +75,31 @@ function ScrollingRow({
                         onMouseEnter={() => (speed = 0)}
                         onMouseLeave={() => (speed = 40)}
                         transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                        className="min-w-[150px] min-h-[150px] flex items-center justify-center gap-3 px-8 py-4 border main-border bg-background rounded-2xl text-lg font-medium shadow-md flex-col hover:banner-shadow"
+                        className="min-w-[100px] min-h-[100px] md:min-w-[150px] md:min-h-[150px] flex items-center justify-center gap-2 md:gap-3 px-4 py-3 md:px-8 md:py-4 border main-border bg-background rounded-xl md:rounded-2xl text-sm md:text-lg font-medium shadow-md flex-col hover:banner-shadow"
                     >
                         <Image
                             src={item.icon}
                             alt={item.name}
                             width={48}
                             height={48}
-                            className="min-h-[48px] min-w-[48px]"
+                            className="min-h-[32px] min-w-[32px] md:min-h-[48px] md:min-w-[48px] w-8 h-8 md:w-12 md:h-12"
                         />
-                        <h2>{item.name}</h2>
+                        <h2 className="text-xs md:text-base">{item.name}</h2>
                     </motion.div>
                 ))}
             </div>
 
             {/* gradient edges */}
-            <div className="hidden dark:block absolute left-0 top-0 h-full w-20 bg-gradient-to-r from-[#0d0d0d] to-transparent pointer-events-none"></div>
-            <div className=" hidden dark:block absolute right-0 top-0 h-full w-20 bg-gradient-to-l from-[#0d0d0d] to-transparent pointer-events-none"></div>
+            <div className="hidden dark:block absolute left-0 top-0 h-full w-10 md:w-20 bg-gradient-to-r from-[#0d0d0d] to-transparent pointer-events-none"></div>
+            <div className="hidden dark:block absolute right-0 top-0 h-full w-10 md:w-20 bg-gradient-to-l from-[#0d0d0d] to-transparent pointer-events-none"></div>
         </div>
     );
 }
 
 export default function MovingSkills() {
     return (
-        <section className=" text-center relative my-16">
-            <div className=" mx-auto">
-
+        <section className="text-center relative my-8 md:my-16">
+            <div className="mx-auto">
                 {/* 🔹 1st row → left to right */}
                 <ScrollingRow items={skillsRow1} reverse={false} speed={70} />
 

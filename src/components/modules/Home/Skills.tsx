@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import React from 'react'
 import SkillsTabs from './Skills/SkillsTabs'
 import MovingSkills from './Skills/MovingSkills'
@@ -5,14 +6,14 @@ import GlowEffect from '@/components/shared/GlowEffect'
 
 export default function Skills() {
     return (
-        <div className='text-center my-20 relative max-w-7xl mx-auto'>
+        <div className='text-center  py-16 md:py-20 relative max-w-7xl mx-auto'>
             <GlowEffect />
-             {/* <div className="absolute w-[750px] h-[800px] rounded-full bg-gradient to-transparent opacity-20 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 blur-[160px] overflow-hidden"></div> */}
-            <h2 className="text-4xl md:text-[55px] font-bold main-txt mb-6">
+            
+            <h2 className="text-3xl md:text-4xl lg:text-[55px] font-bold main-txt mb-4 md:mb-6">
                 Skills & Technologies
             </h2>
-            <p className="text-gray-400 mb-10 text-lg">
-                Technologies I’ve been working with recently to create amazing web experiences.
+            <p className="text-gray-400 mb-6 md:mb-10 text-sm md:text-base lg:text-lg max-w-2xl mx-auto">
+                Technologies I've been working with recently to create amazing web experiences.
             </p>
             <SkillsTabs />
             <MovingSkills />

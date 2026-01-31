@@ -22,24 +22,21 @@ const ProjectCard: React.FC<ProjectProps> = ({
   thumbnail,
   technologies,
   preview,
-  // detailsLink,
   overview,
   id
 }) => {
-  // Animated gradient motion
-  //   const radius = 150;
   const borderRef = useRef<HTMLDivElement>(null);
   const rotate = useMotionValue(0);
 
   useAnimationFrame((t) => {
     rotate.set((t / 100) % 360);
   });
-  console.log(preview)
+
   return (
     <motion.div
       whileHover={{ scale: 1.03, y: -5 }}
       transition={{ type: "spring", stiffness: 200, damping: 15 }}
-      className="relative rounded-2xl p-[2px] overflow-hidden"
+      className="relative rounded-xl md:rounded-2xl p-[2px] overflow-hidden"
     >
       {/* Animated gradient border */}
       <motion.div
@@ -54,46 +51,46 @@ const ProjectCard: React.FC<ProjectProps> = ({
       />
 
       {/* Card content */}
-      <div className="relative z-10 rounded-2xl p-5 shadow-lg flex flex-col  animated-border border min-h-[550px]">
-        <div className="relative w-full h-56 rounded-xl overflow-hidden mb-4">
-          <Image src={thumbnail} alt={title} fill className="object-cover rounded-xl" />
+      <div className="relative z-10 rounded-xl md:rounded-2xl p-4 md:p-5 shadow-lg flex flex-col animated-border border min-h-[450px] md:min-h-[550px]">
+        {/* Thumbnail */}
+        <div className="relative w-full h-48 md:h-56 rounded-lg md:rounded-xl overflow-hidden mb-3 md:mb-4">
+          <Image 
+            src={thumbnail} 
+            alt={title} 
+            fill 
+            className="object-cover rounded-lg md:rounded-xl" 
+          />
         </div>
 
-        <h3 className="text-xl font-semibold mb-2">{title}</h3>
-        <p className="text-sm mb-3 line-clamp-2 text-foreground/80">{overview}</p>
-        {/* <p className=" font-medium mb-2">Used Technologies:</p> */}
+        {/* Title */}
+        <h3 className="text-lg md:text-xl font-semibold mb-2 line-clamp-1">{title}</h3>
+        
+        {/* Overview */}
+        <p className="text-xs md:text-sm mb-3 line-clamp-2 text-foreground/80">{overview}</p>
 
-        <div className="flex flex-wrap gap-2 mb-5">
+        {/* Technologies */}
+        <div className="flex flex-wrap gap-1.5 md:gap-2 mb-4 md:mb-5">
           {technologies.slice(0, 10).map((tech, i) => (
             <span
               key={i}
-              className="px-3 py-1 text-sm bg-purple-900/20  rounded-lg border main-border"
+              className="px-2 py-0.5 md:px-3 md:py-1 text-xs md:text-sm bg-purple-900/20 rounded-md md:rounded-lg border main-border"
             >
               {tech}
             </span>
           ))}
         </div>
 
-        <div className="mt-auto flex gap-3 justify-between">
-          <GlowButton href={preview}>
-            <span className="text-sm">Preview</span> <FaExternalLinkAlt size={13} />
+        {/* Buttons */}
+        <div className="mt-auto flex flex-col sm:flex-row gap-2 md:gap-3 justify-between">
+          <GlowButton href={preview} className="w-full sm:w-auto">
+            <span className="text-xs md:text-sm">Preview</span> 
+            <FaExternalLinkAlt size={12} className="md:w-[13px] md:h-[13px]" />
           </GlowButton>
-          {/* <Link
-            
-            target="_blank"
-            className="flex items-center justify-center gap-2 w-1/2 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-all"
-          >
-            Preview Now <FaExternalLinkAlt size={14} />
-          </Link> */}
-          <GlowButton href={`/projects/${id}`}>
-            <span className="text-sm">Details</span> <FaExternalLinkAlt size={13} />
+          
+          <GlowButton href={`/projects/${id}`} className="w-full sm:w-auto">
+            <span className="text-xs md:text-sm">Details</span> 
+            <FaExternalLinkAlt size={12} className="md:w-[13px] md:h-[13px]" />
           </GlowButton>
-          {/* <Link
-            
-            className="flex items-center justify-center gap-2 w-1/2 py-2 bg-purple-800 hover:bg-purple-900 text-white rounded-lg transition-all"
-          >
-            
-          </Link> */}
         </div>
       </div>
     </motion.div>

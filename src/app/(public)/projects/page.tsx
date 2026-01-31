@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// import { motion } from "framer-motion";
 import ProjectCard from "@/components/modules/Projects/ProjectCard";
 import GlowEffect from "@/components/shared/GlowEffect";
 
@@ -8,18 +7,18 @@ const ProjectsSection = async () => {
     const res = await fetch("http://localhost:4000/api/projects");
     const data = await res.json();
     const projects = data?.data || [];
-console.log(projects)
+    console.log(projects);
+
     return (
-      <section className="py-20 relative px-4 sm:px-6 lg:px-8">
+      <section className=" py-20 md:py-28 relative px-4 md:px-6">
         <GlowEffect />
-        {/* <div className="absolute w-[750px] h-[800px] rounded-full bg-gradient to-transparent opacity-20 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 blur-[160px] overflow-hidden"></div> */}
 
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-[55px] font-bold text-center mb-12" >
+          <h2 className="text-3xl md:text-4xl lg:text-[55px] font-bold text-center mb-8 md:mb-12">
             Featured <span className="main-txt">Projects</span>
           </h2>
 
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 md:gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {projects.map((project: any) => (
               <ProjectCard
                 key={project._id}
@@ -28,10 +27,10 @@ console.log(projects)
                 overview={project.overview}
                 thumbnail={project.thumbnail}
                 technologies={[
-                ...(project.technologies?.backend),
-                ...(project.technologies?.database),
-                ...(project.technologies?.frontend),
-                ...(project.technologies?.tools)
+                  ...(project.technologies?.backend || []),
+                  ...(project.technologies?.database || []),
+                  ...(project.technologies?.frontend || []),
+                  ...(project.technologies?.tools || [])
                 ]}
                 preview={project.preview}
                 detailsLink={project.detailsLink}
@@ -43,7 +42,13 @@ console.log(projects)
     );
   } catch (error) {
     console.error("Error fetching projects:", error);
-    return <p className="text-center text-red-500">Failed to load projects.</p>;
+    return (
+      <div className="py-20 px-4">
+        <p className="text-center text-red-500 text-sm md:text-base">
+          Failed to load projects. Please try again later.
+        </p>
+      </div>
+    );
   }
 };
 
