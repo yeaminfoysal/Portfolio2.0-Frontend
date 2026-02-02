@@ -31,9 +31,22 @@ const Navbar = () => {
             <nav className="hidden lg:block fixed top-12 left-1/2 -translate-x-1/2 -translate-y-1/2 w-5xl xl:w-7xl  rounded-full bg-[#a722ca]/10 dark:bg-[#a722ca]/10 backdrop-blur-lg border border-[#a722ca]/20 z-50">
                 <div className="max-w-6xl mx-auto px-6 py-1 flex justify-between items-center">
                     {/* Logo / Name */}
-                    <Link href="/" className="text-3xl font-bold main-txt ">
-                        Yeamin<span className="text-gray-800 dark:text-gray-100">Foysal</span>
+                    <Link
+                        href="/"
+                        className="flex items-center font-mono text-2xl font-bold 
+             transition-all duration-300 
+             hover:drop-shadow-[0_0_8px_#a722ca]"
+                    >
+                        <span className="text-[#a722ca]">&lt;</span>
+
+                        <span className="mx-1">
+                            <span className="main-txt">Yeamin</span>
+                            <span className="text-gray-800 dark:text-gray-100">Foysal</span>
+                        </span>
+
+                        <span className="text-[#a722ca]">/&gt;</span>
                     </Link>
+
 
                     {/* Desktop Links */}
                     <ul className="hidden md:flex space-x-8 items-center">
@@ -41,11 +54,10 @@ const Navbar = () => {
                             <li key={link.name}>
                                 <Link
                                     href={link.path}
-                                    className={`text-lg font-medium transition-colors ${
-                                        pathname === link.path
-                                            ? " main-txt border-b-2 border-[#a722ca] pb-1"
-                                            : "text-gray-700 dark:text-gray-300 hover:text-indigo-500 dark:hover:text-indigo-400"
-                                    }`}
+                                    className={`text-lg font-medium transition-colors ${pathname === link.path
+                                        ? " main-txt border-b-2 border-[#a722ca] pb-1"
+                                        : "text-gray-700 dark:text-gray-300 hover:text-indigo-500 dark:hover:text-indigo-400"
+                                        }`}
                                 >
                                     {link.name}
                                 </Link>
@@ -89,17 +101,15 @@ const Navbar = () => {
 
             {/* Overlay */}
             <div
-                className={`lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity duration-300 ${
-                    isOpen ? "opacity-100 visible" : "opacity-0 invisible"
-                }`}
+                className={`lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity duration-300 ${isOpen ? "opacity-100 visible" : "opacity-0 invisible"
+                    }`}
                 onClick={() => setIsOpen(false)}
             />
 
             {/* Slide-in Menu from Right */}
             <div
-                className={`lg:hidden fixed top-0 right-0 h-full w-72 bg-white dark:bg-gray-900 shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
-                    isOpen ? "translate-x-0" : "translate-x-full"
-                }`}
+                className={`lg:hidden fixed top-0 right-0 h-full w-72 bg-white dark:bg-gray-900 shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${isOpen ? "translate-x-0" : "translate-x-full"
+                    }`}
             >
                 <div className="flex flex-col h-full pt-20 px-6">
                     {/* Menu Links */}
@@ -109,11 +119,10 @@ const Navbar = () => {
                                 <Link
                                     href={link.path}
                                     onClick={() => setIsOpen(false)}
-                                    className={`text-xl font-medium block py-2 transition-colors ${
-                                        pathname === link.path
-                                            ? "main-txt border-l-4 border-[#a722ca] pl-4"
-                                            : "text-gray-700 dark:text-gray-300 hover:text-[#a722ca] dark:hover:text-[#a722ca] pl-4"
-                                    }`}
+                                    className={`text-xl font-medium block py-2 transition-colors ${pathname === link.path
+                                        ? "main-txt border-l-4 border-[#a722ca] pl-4"
+                                        : "text-gray-700 dark:text-gray-300 hover:text-[#a722ca] dark:hover:text-[#a722ca] pl-4"
+                                        }`}
                                 >
                                     {link.name}
                                 </Link>
@@ -127,7 +136,7 @@ const Navbar = () => {
                             <span className="text-sm text-gray-600 dark:text-gray-400">Theme</span>
                             <ModeToggle />
                         </div>
-                        
+
                         <Button
                             onClick={() => {
                                 handleNavigate();
