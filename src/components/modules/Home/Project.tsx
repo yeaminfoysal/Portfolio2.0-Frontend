@@ -3,7 +3,7 @@ import GlowEffect from "@/components/shared/GlowEffect";
 import ProjectCard from "../Projects/ProjectCard";
 
 const ProjectsSection = async () => {
-  const res = await fetch("http://localhost:4000/api/projects");
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/projects`);
   const data = await res.json();
   const projects = data?.data || [];
   

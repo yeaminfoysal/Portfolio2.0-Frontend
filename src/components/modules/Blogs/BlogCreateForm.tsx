@@ -17,6 +17,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import GlowButton from "@/components/shared/GlowButton";
+import toast from "react-hot-toast";
 
 const blogSchema = z.object({
     title: z.string().min(3, "Title is required"),
@@ -58,37 +59,43 @@ export default function BlogCreateForm() {
     });
 
     const onSubmit = async (values: IBlogFormValues) => {
-        console.log("✅ Submitting:", values);
-        try {
-            const formData = new FormData();
+  const toastId = toast.loading("Creating blog...");
 
-            const blogData = {
-                ...values,
-            };
+  try {
+    const formData = new FormData();
 
-            formData.append("data", JSON.stringify(blogData));
-            if (image) {
-                formData.append("file", image);
-            }
+    formData.append("data", JSON.stringify(values));
+    if (image) {
+      formData.append("file", image);
+    }
 
-            const res = await fetch(`http://localhost:4000/api/blogs`, {
-                method: "POST",
-                body: formData,
-                credentials: "include"
-            });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs`, {
+      method: "POST",
+      body: formData,
+      credentials: "include",
+    });
 
-            if (!res.ok) throw new Error("Failed to create blog");
+    if (!res.ok) {
+      throw new Error("Failed to create blog");
+    }
 
-            const result = await res.json();
-            console.log(result);
+    await res.json();
 
-            setPreviewURL(null);
-            setImage(null);
-            reset();
-        } catch (err: any) {
-            console.error("❌ Submit error:", err);
-        }
-    };
+    toast.success("🎉 Blog created successfully!", {
+      id: toastId,
+    });
+
+    setPreviewURL(null);
+    setImage(null);
+    reset();
+  } catch (err: any) {
+    toast.error(`❌ Failed to create blog: ${err?.message || "Unknown error"}`, {
+      id: toastId,
+    });
+    console.error(err);
+  }
+};
+
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];

@@ -158,7 +158,7 @@ export default function ProjectCreateForm() {
 
       console.log(formData)
 
-      const res = await fetch(`http://localhost:4000/api/projects`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/projects`, {
         method: "POST",
         body: formData,
         credentials: "include"

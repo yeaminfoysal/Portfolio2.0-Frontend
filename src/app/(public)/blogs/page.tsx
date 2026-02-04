@@ -4,7 +4,7 @@ import GlowEffect from "@/components/shared/GlowEffect";
 
 const BlogSection = async () => {
 
-  const res = await fetch("http://localhost:4000/api/blogs");
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs`);
   const data = await res.json();
   const blogs: Blog[] = data?.data || [];
 

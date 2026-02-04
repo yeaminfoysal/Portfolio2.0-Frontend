@@ -1,14 +1,29 @@
 "use client";
 
 import GlowButton from "@/components/shared/GlowButton";
-import React from "react";
+import React, { useEffect } from "react";
 import { FaGoogle } from "react-icons/fa";
 
 export default function Page() {
     const handleGoogleLogin = () => {
-        // your backend google auth route
-        window.location.href = "http://localhost:4000/api/auth/google";
+        window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/google`;
     };
+
+    // Test for checking set coockie
+    useEffect(() => {
+        const checkAuth = async () => {
+            try {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/check`, {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+                console.log('Auth status:', data);
+            } catch (error) {
+                console.error('Auth check failed:', error);
+            }
+        };
+        checkAuth();
+    }, []);
 
     return (
         <div className="flex flex-col justify-center items-center min-h-screen">

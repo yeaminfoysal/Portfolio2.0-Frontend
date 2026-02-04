@@ -61,7 +61,7 @@ export default function BlogUpdateModal({ blog }: { blog: IBlogFormValues }) {
             }
 
             const res = await fetch(
-                `http://localhost:4000/api/blogs/${blog._id}`,
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs/${blog._id}`,
                 {
                     method: "PATCH",
                     body: formData,

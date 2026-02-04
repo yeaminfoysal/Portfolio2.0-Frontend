@@ -2,7 +2,7 @@ import { BlogsTable } from '@/components/modules/Blogs/BlogsTable';
 import React from 'react'
 
 export default async function ManageProjects() {
-  const res = await fetch("http://localhost:4000/api/blogs");
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs`);
   const data = await res.json();
   const blogs = data?.data || [];
   return (

@@ -154,7 +154,7 @@ export default function ProjectUpdateModal({ project }: { project: any }) {
             if (fullImageFile) formData.append("fullImage", fullImageFile);
 
             const res = await fetch(
-                `http://localhost:4000/api/projects/${project._id}`,
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/projects/${project._id}`,
                 {
                     method: "PATCH",
                     body: formData,

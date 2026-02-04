@@ -4,6 +4,7 @@ import type { NextRequest } from "next/server";
 // Protect specific routes
 export function middleware(request: NextRequest) {
   const token = request.cookies.get("accessToken")?.value;
+  console.log("token : ",token)
 
   const { pathname } = request.nextUrl;
 
