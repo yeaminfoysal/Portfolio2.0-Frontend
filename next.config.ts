@@ -1,10 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "export",
+  // output: "export", //For Firebase Deployment
 
   images: {
-    unoptimized: true,
+    // unoptimized: true, //For Firebase Deployment
     remotePatterns: [
       {
         protocol: "https",
