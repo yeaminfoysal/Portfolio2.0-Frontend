@@ -68,7 +68,15 @@ const Navbar = () => {
                             <LogIn className="h-[1.2rem] w-[1.2rem]" />
                         </Button>
 
-                        <GlowButton>Resume</GlowButton>
+                        <GlowButton
+                            className="w-full sm:w-auto"
+                            href="https://drive.google.com/file/d/1Y414gk2TVV6Rm9APfHxhTp5GOEfkzGuj/view?usp=sharing"
+                            target="_blank"
+                        >
+                            <span className="flex items-center gap-2 justify-center">
+                                Resume
+                            </span>
+                        </GlowButton>
                     </ul>
 
                     {/* Mobile Menu Button */}
@@ -85,8 +93,17 @@ const Navbar = () => {
             <nav className="lg:hidden fixed top-0 left-0 right-0 bg-[#a722ca]/10 dark:bg-[#a722ca]/10 backdrop-blur-lg border-b border-[#a722ca]/20 z-50">
                 <div className="px-4 py-3 flex justify-between items-center">
                     {/* Logo */}
-                    <Link href="/" className="text-2xl font-bold main-txt">
-                        Yeamin<span className="text-gray-800 dark:text-gray-100">Foysal</span>
+                    <Link
+                        href="/"
+                        className="flex items-center font-mono text-2xl font-bold  transition-all duration-300 hover:drop-shadow-[0_0_8px_#a722ca]" >
+                        <span className="text-[#a722ca]">&lt;</span>
+
+                        <span className="mx-1">
+                            <span className="main-txt">Yeamin</span>
+                            <span className="text-gray-800 dark:text-gray-100">Foysal</span>
+                        </span>
+
+                        <span className="text-[#a722ca]">/&gt;</span>
                     </Link>
 
                     {/* Menu Button */}
