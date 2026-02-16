@@ -10,10 +10,11 @@ interface GlowButtonProps {
     className?: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     type?: any
-    isDisabled?: boolean
+    isDisabled?: boolean,
+    target?: string
 }
 
-export default function GlowButton({ href, children, className, type, isDisabled }: GlowButtonProps) {
+export default function GlowButton({ href, children, className, type, isDisabled, target }: GlowButtonProps) {
     const InnerContent = (
         <div
             className={clsx(
@@ -43,7 +44,7 @@ export default function GlowButton({ href, children, className, type, isDisabled
 
     // If href is provided → render Next.js Link
     return href ? (
-        <Link href={href} className="inline-flex items-center justify-center no-underline align-middle">
+        <Link href={href} target={target} className="inline-flex items-center justify-center no-underline align-middle">
             {InnerContent}
         </Link>
     ) : (

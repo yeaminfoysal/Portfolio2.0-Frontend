@@ -138,7 +138,7 @@ export default function Hero() {
                     {/* Social Icons */}
                     <div className="flex justify-center xl:justify-start gap-3 md:gap-4 mt-4">
                         <Link
-                            href="https://facebook.com"
+                            href="https://facebook.com/ariyan.yeamin.1"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="p-2 md:p-3 bg-[var(--accent)] text-[var(--accent-foreground)] rounded-full hover:scale-110 transition-transform duration-300"
@@ -147,7 +147,7 @@ export default function Hero() {
                         </Link>
 
                         <Link
-                            href="https://linkedin.com"
+                            href="https://linkedin.com/in/yeamin-foysal"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="p-2 md:p-3 bg-[var(--accent)] text-[var(--accent-foreground)] rounded-full hover:scale-110 transition-transform duration-300"
@@ -156,7 +156,7 @@ export default function Hero() {
                         </Link>
 
                         <Link
-                            href="https://github.com"
+                            href="https://github.com/yeaminfoysal"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="p-2 md:p-3 bg-[var(--accent)] text-[var(--accent-foreground)] rounded-full hover:scale-110 transition-transform duration-300"
@@ -170,7 +170,11 @@ export default function Hero() {
                             Projects
                         </GlowButton>
 
-                        <GlowButton className="w-full sm:w-auto">
+                        <GlowButton
+                            className="w-full sm:w-auto"
+                            href="https://drive.google.com/file/d/1Y414gk2TVV6Rm9APfHxhTp5GOEfkzGuj/view?usp=sharing"
+                            target="_blank"
+                        >
                             <span className="flex items-center gap-2 justify-center">
                                 Resume
                                 <MdArrowOutward size={20} className="md:w-6 md:h-6" />
