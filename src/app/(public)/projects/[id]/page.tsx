@@ -1,4 +1,5 @@
 import ProjectDetails from '@/components/modules/Projects/ProjectDetails';
+export const dynamic = "force-dynamic";
 
 type Props = {
   params: { id: string };
